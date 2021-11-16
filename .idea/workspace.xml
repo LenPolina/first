@@ -4,26 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11ce123b-abe4-432f-b8a1-7974dc000cd2" name="Changes" comment="init">
-      <change afterPath="$PROJECT_DIR$/first/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DayOfWeek/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DayOfWeek/Year.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Fibonacci/Fibonacci.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Fibonacci/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Flat/Building.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Flat/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Nod/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Nod/Numbers.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Swap/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Swap/Swap.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestDayOfWeek/TestDayOfWeek.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestFibonacci/TestFibonacci.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestFlat/TestFlat.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestNod/TestNod.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestSwap/TestSwap.java" beforeDir="false" />
-    </list>
+    <list default="true" id="11ce123b-abe4-432f-b8a1-7974dc000cd2" name="Changes" comment="- setup environment." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,7 +30,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
+    <property name="settings.editor.selected.configurable" value="advanced.settings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -103,6 +84,7 @@
       <option name="presentableId" value="Default" />
       <updated>1637048387012</updated>
       <workItem from="1637048388526" duration="1315000" />
+      <workItem from="1637049743159" duration="306000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1637049294193</created>
@@ -111,7 +93,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637049294193</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- setup environment.">
+      <created>1637050046513</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1637050046513</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,9 +116,11 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
-    <option name="LAST_COMMIT_MESSAGE" value="init" />
+    <MESSAGE value="- setup environment." />
+    <option name="LAST_COMMIT_MESSAGE" value="- setup environment." />
   </component>
 </project>
