@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11ce123b-abe4-432f-b8a1-7974dc000cd2" name="Changes" comment="- setup environment." />
+    <list default="true" id="11ce123b-abe4-432f-b8a1-7974dc000cd2" name="Changes" comment="- add initial files.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/first/src/main/java/DayOfWeek/Year.java" beforeDir="false" afterPath="$PROJECT_DIR$/first/src/main/java/DayOfWeek/Year.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/first/src/test/java/TestDayOfWeek/TestDayOfWeek.java" beforeDir="false" afterPath="$PROJECT_DIR$/first/src/test/java/TestDayOfWeek/TestDayOfWeek.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/first/target/classes/DayOfWeek/Year.class" beforeDir="false" afterPath="$PROJECT_DIR$/first/target/classes/DayOfWeek/Year.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/first/target/test-classes/TestDayOfWeek/TestDayOfWeek.class" beforeDir="false" afterPath="$PROJECT_DIR$/first/target/test-classes/TestDayOfWeek/TestDayOfWeek.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,21 +45,8 @@
       <recent name="C:\Users\User\IdeaProject\first" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestDayOfWeek">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DayOfWeek.Main" />
-      <module name="first" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="DayOfWeek.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestDayOfWeek" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TestDayOfWeek.totalTest">
+    <configuration name="TestDayOfWeek.equivalenceClasses" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="first" />
       <extension name="coverage">
         <pattern>
@@ -63,15 +56,83 @@
       </extension>
       <option name="PACKAGE_NAME" value="TestDayOfWeek" />
       <option name="MAIN_CLASS_NAME" value="TestDayOfWeek.TestDayOfWeek" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="equivalenceClasses" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestDayOfWeek.implementation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="first" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TestDayOfWeek.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="TestDayOfWeek" />
+      <option name="MAIN_CLASS_NAME" value="TestDayOfWeek.TestDayOfWeek" />
+      <option name="METHOD_NAME" value="implementation" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestDayOfWeek.randomValues" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="first" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TestDayOfWeek.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="TestDayOfWeek" />
+      <option name="MAIN_CLASS_NAME" value="TestDayOfWeek.TestDayOfWeek" />
+      <option name="METHOD_NAME" value="randomValues" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestDayOfWeek.subjectArea" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="first" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TestDayOfWeek.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="TestDayOfWeek" />
+      <option name="MAIN_CLASS_NAME" value="TestDayOfWeek.TestDayOfWeek" />
+      <option name="METHOD_NAME" value="subjectArea" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestDayOfWeek.totalTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="first" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TestDayOfWeek.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="TestDayOfWeek" />
+      <option name="MAIN_CLASS_NAME" value="TestDayOfWeek.TestDayOfWeek" />
+      <option name="METHOD_NAME" value="totalTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestDayOfWeek" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.TestDayOfWeek.totalTest" />
+        <item itemvalue="JUnit.TestDayOfWeek.equivalenceClasses" />
+        <item itemvalue="JUnit.TestDayOfWeek.randomValues" />
+        <item itemvalue="JUnit.TestDayOfWeek.implementation" />
+        <item itemvalue="JUnit.TestDayOfWeek.subjectArea" />
       </list>
     </recent_temporary>
   </component>
@@ -84,7 +145,7 @@
       <option name="presentableId" value="Default" />
       <updated>1637048387012</updated>
       <workItem from="1637048388526" duration="1315000" />
-      <workItem from="1637049743159" duration="306000" />
+      <workItem from="1637049743159" duration="20182000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1637049294193</created>
@@ -100,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637050046513</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="- add initial files.">
+      <created>1637050150587</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1637050150587</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,6 +189,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="- setup environment." />
-    <option name="LAST_COMMIT_MESSAGE" value="- setup environment." />
+    <MESSAGE value="- add initial files." />
+    <option name="LAST_COMMIT_MESSAGE" value="- add initial files." />
   </component>
 </project>
