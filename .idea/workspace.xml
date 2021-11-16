@@ -4,11 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11ce123b-abe4-432f-b8a1-7974dc000cd2" name="Changes" comment="" />
+    <list default="true" id="11ce123b-abe4-432f-b8a1-7974dc000cd2" name="Changes" comment="init">
+      <change afterPath="$PROJECT_DIR$/first/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DayOfWeek/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DayOfWeek/Year.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Fibonacci/Fibonacci.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Fibonacci/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Flat/Building.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Flat/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Nod/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Nod/Numbers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Swap/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Swap/Swap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestDayOfWeek/TestDayOfWeek.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestFibonacci/TestFibonacci.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestFlat/TestFlat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestNod/TestNod.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestSwap/TestSwap.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -23,13 +45,20 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="jdk.selected.JAVA_MODULE" value="openjdk-17" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\IdeaProject\first\first\src\test\java" />
+      <recent name="C:\Users\User\IdeaProject\first\first\src\main\java" />
       <recent name="C:\Users\User\IdeaProject\first" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.TestDayOfWeek">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="DayOfWeek.Main" />
       <module name="first" />
@@ -43,8 +72,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestDayOfWeek" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="first" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="TestDayOfWeek.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="TestDayOfWeek" />
+      <option name="MAIN_CLASS_NAME" value="TestDayOfWeek.TestDayOfWeek" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestDayOfWeek" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -57,8 +102,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1637048387012</updated>
-      <workItem from="1637048388526" duration="604000" />
+      <workItem from="1637048388526" duration="1315000" />
     </task>
+    <task id="LOCAL-00001" summary="init">
+      <created>1637049294193</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1637049294193</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -74,5 +127,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init" />
+    <option name="LAST_COMMIT_MESSAGE" value="init" />
   </component>
 </project>
