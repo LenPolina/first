@@ -1,11 +1,13 @@
 package TestFlat;
 
 import Flat.Building;
+import Flat.InvalidValuesException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static java.lang.Integer.*;
+import static java.lang.Integer.MAX_VALUE;
+import static org.junit.Assert.assertThrows;
 
 public class TestFlat {
 
@@ -15,6 +17,50 @@ public class TestFlat {
     public void createObject() {
         building = new Building();
     }
+
+    @Test
+    public void invalidTest(){
+        test(1,MAX_VALUE,0,1,1);
+        test(1,MAX_VALUE,-1,1,1);
+        test(2,MAX_VALUE,1,1,1);
+        test(2,MAX_VALUE,1,1,1);
+        test(1,MAX_VALUE+1,1,1,1);
+        test(0,MAX_VALUE,1,1,1);
+        test(-1,MAX_VALUE,1,1,1);
+
+        test(1,1,0,1,1);
+        test(1,1,-1,1,1);
+        test(1,0,1,1,1);
+        test(1,-1,1,1,1);
+        test(0,1,1,1,1);
+        test(-1,1,1,1,1);
+
+        test(1,1,MAX_VALUE+1,1,1);
+        test(1,0,MAX_VALUE,1,1);
+        test(1,-1,MAX_VALUE,1,1);
+        test(0,1,MAX_VALUE,1,1);
+        test(-1,1,MAX_VALUE,1,1);
+
+        test(1,MAX_VALUE,MAX_VALUE+1,1,1);
+        test(2,MAX_VALUE,MAX_VALUE,1,1);
+        test(1,MAX_VALUE+1,MAX_VALUE,1,1);
+        test(0,MAX_VALUE,MAX_VALUE,1,1);
+        test(-1,MAX_VALUE,MAX_VALUE,1,1);
+
+        test(MAX_VALUE,1,0,1,1);
+        test(MAX_VALUE,1,-1,1,1);
+        test(MAX_VALUE+1,1,1,1,1);
+        test(MAX_VALUE,0,1,1,1);
+        test(MAX_VALUE,-1,1,1,1);
+        test(MAX_VALUE,2,1,1,1);
+
+        test(MAX_VALUE,1,MAX_VALUE+1,1,1);
+        test(MAX_VALUE+1,1,MAX_VALUE,1,1);
+        test(MAX_VALUE,0,MAX_VALUE,1,1);
+        test(MAX_VALUE,-1,MAX_VALUE,1,1);
+        test(MAX_VALUE,2,MAX_VALUE,1,1);
+    }
+
     //4_611_686_014_132_420_609
     @Test//
     public void boundaryValuesTest() {
@@ -79,6 +125,36 @@ public class TestFlat {
         test(MAX_VALUE / 888888, 888888, 2, 1, 1);
         //endregion
 
+        //region only first flat and different floor from max-1 and different numbers of apartments on the floor(1)
+        test(MAX_VALUE - 1, 1, 1, 1, 1);
+        test((MAX_VALUE - 1) / 2, 2, 1, 1, 1);
+        test((MAX_VALUE - 1) / 3, 3, 1, 1, 1);
+        test((MAX_VALUE - 1) / 4, 4, 1, 1, 1);
+        test((MAX_VALUE - 1) / 5, 5, 1, 1, 1);
+        test((MAX_VALUE - 1) / 6, 6, 1, 1, 1);
+
+        test(6, (MAX_VALUE - 1) / 6, 1, 1, 1);
+        test(5, (MAX_VALUE - 1) / 5, 1, 1, 1);
+        test(4, (MAX_VALUE - 1) / 4, 1, 1, 1);
+        test(3, (MAX_VALUE - 1) / 3, 1, 1, 1);
+        test(2, (MAX_VALUE - 1) / 2, 1, 1, 1);
+        test(1, MAX_VALUE - 1, 1, 1, 1);
+
+        test((MAX_VALUE - 1) / 123, 123, 1, 1, 1);
+        test((MAX_VALUE - 1) / 3421, 3421, 1, 1, 1);
+        test((MAX_VALUE - 1) / 514, 514, 1, 1, 1);
+        test((MAX_VALUE - 1) / 75625, 75625, 1, 1, 1);
+        test((MAX_VALUE - 1) / 436352, 436352, 1, 1, 1);
+        test((MAX_VALUE - 1) / 648441232, 648441232, 1, 1, 1);
+
+        test((MAX_VALUE - 1) / 666, 666, 1, 1, 1);
+        test((MAX_VALUE - 1) / 666666, 666666, 1, 1, 1);
+        test((MAX_VALUE - 1) / 777, 777, 1, 1, 1);
+        test((MAX_VALUE - 1) / 777777, 777777, 1, 1, 1);
+        test((MAX_VALUE - 1) / 888, 888, 1, 1, 1);
+        test((MAX_VALUE - 1) / 888888, 888888, 1, 1, 1);
+        //endregion
+
         //region only max flat and different floor and different numbers of apartments on the floor(2)
         test(MAX_VALUE, 1, MAX_VALUE, MAX_VALUE, 1);
         test(MAX_VALUE / 2, 2, MAX_VALUE, 1, 2);
@@ -139,6 +215,36 @@ public class TestFlat {
         test(MAX_VALUE / 888888, 888888, MAX_VALUE - 1, 1, 2);
         //endregion
 
+        //region only max flat and different floor from max-1 and different numbers of apartments on the floor(2)
+        test(MAX_VALUE - 1, 1, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 2, 2, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 3, 3, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 4, 4, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 5, 5, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 6, 6, MAX_VALUE, 1, 2);
+
+        test(6, (MAX_VALUE - 1) / 6, MAX_VALUE, 1, 2);
+        test(5, (MAX_VALUE - 1) / 5, MAX_VALUE, 1, 2);
+        test(4, (MAX_VALUE - 1) / 4, MAX_VALUE, 1, 2);
+        test(3, (MAX_VALUE - 1) / 3, MAX_VALUE, 1, 2);
+        test(2, (MAX_VALUE - 1) / 2, MAX_VALUE, 1, 2);
+        test(1, MAX_VALUE - 1, MAX_VALUE, 1, 2);
+
+        test((MAX_VALUE - 1) / 123, 123, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 3421, 3421, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 514, 514, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 75625, 75625, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 436352, 436352, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 648441232, 648441232, MAX_VALUE, 1, 2);
+
+        test((MAX_VALUE - 1) / 666, 666, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 666666, 666666, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 777, 777, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 777777, 777777, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 888, 888, MAX_VALUE, 1, 2);
+        test((MAX_VALUE - 1) / 888888, 888888, MAX_VALUE, 1, 2);
+        //endregion
+
         //region only first floor and max flat on the floor(3)
         test(1, MAX_VALUE, 1, 1, 1);
         test(1, MAX_VALUE, 2, 1, 1);
@@ -155,21 +261,15 @@ public class TestFlat {
 
         test(1, MAX_VALUE, 21, 1, 1);
         test(1, MAX_VALUE, 4781, 1, 1);
-        test(1, MAX_VALUE, 59321, 1, 1);
-        test(1, MAX_VALUE, 418233, 1, 1);
-        test(1, MAX_VALUE, 5322445, 1, 1);
         test(1, MAX_VALUE, 31325646, 1, 1);
         test(1, MAX_VALUE, 876543123, 1, 1);
         test(1, MAX_VALUE, 1691873264, 1, 1);
 
         test(1, MAX_VALUE, 666, 1, 1);
-        test(1, MAX_VALUE, 666666, 1, 1);
         test(1, MAX_VALUE, 666666666, 1, 1);
         test(1, MAX_VALUE, 777, 1, 1);
-        test(1, MAX_VALUE, 777777, 1, 1);
         test(1, MAX_VALUE, 777777777, 1, 1);
         test(1, MAX_VALUE, 888, 1, 1);
-        test(1, MAX_VALUE, 888888, 1, 1);
         test(1, MAX_VALUE, 888888888, 1, 1);
         //endregion
 
@@ -191,20 +291,42 @@ public class TestFlat {
         test(1, MAX_VALUE - 1, 4781, 1, 1);
         test(1, MAX_VALUE - 1, 59321, 1, 1);
         test(1, MAX_VALUE - 1, 418233, 1, 1);
-        test(1, MAX_VALUE - 1, 3454674, 1, 1);
-        test(1, MAX_VALUE - 1, 74352314, 1, 1);
-        test(1, MAX_VALUE - 1, 534266879, 1, 1);
         test(1, MAX_VALUE - 1, 1691873264, 1, 1);
 
         test(1, MAX_VALUE - 1, 666, 1, 1);
-        test(1, MAX_VALUE - 1, 666666, 1, 1);
         test(1, MAX_VALUE - 1, 666666666, 1, 1);
         test(1, MAX_VALUE - 1, 777, 1, 1);
-        test(1, MAX_VALUE - 1, 777777, 1, 1);
         test(1, MAX_VALUE - 1, 777777777, 1, 1);
         test(1, MAX_VALUE - 1, 888, 1, 1);
-        test(1, MAX_VALUE - 1, 888888, 1, 1);
         test(1, MAX_VALUE - 1, 888888888, 1, 1);
+        //endregion
+
+        //region only second floor and max flat on the floor(3)
+        test(2, MAX_VALUE / 2, 1, 1, 1);
+        test(2, MAX_VALUE / 2, 2, 1, 1);
+        test(2, MAX_VALUE / 2, 3, 1, 1);
+        test(2, MAX_VALUE / 2, 4, 1, 1);
+        test(2, MAX_VALUE / 2, 5, 1, 1);
+
+        test(2, MAX_VALUE / 2, MAX_VALUE - 5, 2, 1);
+        test(2, MAX_VALUE / 2, MAX_VALUE - 4, 2, 1);
+        test(2, MAX_VALUE / 2, MAX_VALUE - 3, 2, 1);
+        test(2, MAX_VALUE / 2, MAX_VALUE - 2, 2, 1);
+        test(2, MAX_VALUE / 2, MAX_VALUE - 1, 2, 1);
+        test(2, MAX_VALUE / 2, MAX_VALUE, 1, 2);
+
+        test(2, MAX_VALUE / 2, 21, 1, 1);
+        test(2, MAX_VALUE / 2, 4781, 1, 1);
+        test(2, MAX_VALUE / 2, 31325646, 1, 1);
+        test(2, MAX_VALUE / 2, 876543123, 1, 1);
+        test(2, MAX_VALUE / 2, 1691873264, 2, 1);
+
+        test(2, MAX_VALUE / 2, 666, 1, 1);
+        test(2, MAX_VALUE / 2, 666666666, 1, 1);
+        test(2, MAX_VALUE / 2, 777, 1, 1);
+        test(2, MAX_VALUE / 2, 777777777, 1, 1);
+        test(2, MAX_VALUE / 2, 888, 1, 1);
+        test(2, MAX_VALUE / 2, 888888888, 1, 1);
         //endregion
 
         //region only max floor and one flat in the floor(4)
@@ -221,22 +343,17 @@ public class TestFlat {
         test(MAX_VALUE, 1, MAX_VALUE, MAX_VALUE, 1);
 
         test(MAX_VALUE, 1, 9, 9, 1);
-        test(MAX_VALUE, 1, 1367, 1367, 1);
-        test(MAX_VALUE, 1, 42165, 42165, 1);
-        test(MAX_VALUE, 1, 812735, 812735, 1);
         test(MAX_VALUE, 1, 5243566, 5243566, 1);
         test(MAX_VALUE, 1, 27511544, 27511544, 1);
         test(MAX_VALUE, 1, 531557790, 531557790, 1);
         test(MAX_VALUE, 1, 1521872912, 1521872912, 1);
 
         test(MAX_VALUE, 1, 666, 666, 1);
-        test(MAX_VALUE, 1, 666666, 666666, 1);
         test(MAX_VALUE, 1, 666666666, 666666666, 1);
         test(MAX_VALUE, 1, 777, 777, 1);
         test(MAX_VALUE, 1, 777777, 777777, 1);
         test(MAX_VALUE, 1, 777777777, 777777777, 1);
         test(MAX_VALUE, 1, 888, 888, 1);
-        test(MAX_VALUE, 1, 888888, 888888, 1);
         test(MAX_VALUE, 1, 888888888, 888888888, 1);
         //endregion
 
@@ -254,9 +371,6 @@ public class TestFlat {
         test(MAX_VALUE - 1, 1, MAX_VALUE, 1, 2);
 
         test(MAX_VALUE - 1, 1, 9, 9, 1);
-        test(MAX_VALUE - 1, 1, 36, 36, 1);
-        test(MAX_VALUE - 1, 1, 532, 532, 1);
-        test(MAX_VALUE - 1, 1, 1367, 1367, 1);
         test(MAX_VALUE - 1, 1, 42165, 42165, 1);
         test(MAX_VALUE - 1, 1, 812735, 812735, 1);
         test(MAX_VALUE - 1, 1, 6343124, 6343124, 1);
@@ -265,14 +379,39 @@ public class TestFlat {
         test(MAX_VALUE - 1, 1, 1335768763, 1335768763, 1);
 
         test(MAX_VALUE - 1, 1, 666, 666, 1);
-        test(MAX_VALUE - 1, 1, 666666, 666666, 1);
         test(MAX_VALUE - 1, 1, 666666666, 666666666, 1);
-        test(MAX_VALUE - 1, 1, 777, 777, 1);
         test(MAX_VALUE - 1, 1, 777777, 777777, 1);
         test(MAX_VALUE - 1, 1, 777777777, 777777777, 1);
-        test(MAX_VALUE - 1, 1, 888, 888, 1);
         test(MAX_VALUE - 1, 1, 888888, 888888, 1);
         test(MAX_VALUE - 1, 1, 888888888, 888888888, 1);
+        //endregion
+
+        //region only max/2 floor and two flat in the floor(4)
+        test(MAX_VALUE / 2, 2, 1, 1, 1);
+        test(MAX_VALUE / 2, 2, 2, 1, 1);
+        test(MAX_VALUE / 2, 2, 3, 2, 1);
+        test(MAX_VALUE / 2, 2, 4, 2, 1);
+        test(MAX_VALUE / 2, 2, 5, 3, 1);
+
+        test(MAX_VALUE / 2, 2, MAX_VALUE - 4, (MAX_VALUE - 3) / 2, 1);
+        test(MAX_VALUE / 2, 2, MAX_VALUE - 3, (MAX_VALUE - 3) / 2, 1);
+        test(MAX_VALUE / 2, 2, MAX_VALUE - 2, (MAX_VALUE - 1) / 2, 1);
+        test(MAX_VALUE / 2, 2, MAX_VALUE - 1, (MAX_VALUE - 1) / 2, 1);
+        test(MAX_VALUE / 2, 2, MAX_VALUE, 1, 2);
+
+        test(MAX_VALUE / 2, 2, 9, 5, 1);
+        test(MAX_VALUE / 2, 2, 5243566, 2621783, 1);
+        test(MAX_VALUE / 2, 2, 27511544, 13755772, 1);
+        test(MAX_VALUE / 2, 2, 531557790, 265778895, 1);
+        test(MAX_VALUE / 2, 2, 1521872912, 760936456, 1);
+
+        test(MAX_VALUE / 2, 2, 666, 333, 1);
+        test(MAX_VALUE / 2, 2, 666666666, 333333333, 1);
+        test(MAX_VALUE / 2, 2, 777, 389, 1);
+        test(MAX_VALUE / 2, 2, 777777, 388889, 1);
+        test(MAX_VALUE / 2, 2, 777777777, 388888889, 1);
+        test(MAX_VALUE / 2, 2, 888, 444, 1);
+        test(MAX_VALUE / 2, 2, 888888888, 444444444, 1);
         //endregion
 
         //region one floor and one flat on the floor(5)
@@ -290,21 +429,15 @@ public class TestFlat {
 
         test(1, 1, 35, 1, 35);
         test(1, 1, 756, 1, 756);
-        test(1, 1, 5437, 1, 5437);
-        test(1, 1, 21345, 1, 21345);
-        test(1, 1, 463412, 1, 463412);
         test(1, 1, 9625312, 1, 9625312);
         test(1, 1, 15324321, 1, 15324321);
         test(1, 1, 463121439, 1, 463121439);
         test(1, 1, 1224365471, 1, 1224365471);
 
-        test(1, 1, 666, 1, 666);
         test(1, 1, 666666, 1, 666666);
         test(1, 1, 666666666, 1, 666666666);
-        test(1, 1, 777, 1, 777);
         test(1, 1, 777777, 1, 777777);
         test(1, 1, 777777777, 1, 777777777);
-        test(1, 1, 888, 1, 888);
         test(1, 1, 888888, 1, 888888);
         test(1, 1, 888888888, 1, 888888888);
         //endregion
@@ -315,50 +448,22 @@ public class TestFlat {
         test(1, 2, 3, 1, 2);
         test(1, 2, 4, 1, 2);
         test(1, 2, 5, 1, 3);
-        test(1, 2, 6, 1, 3);
-        test(1, 2, 7, 1, 4);
-        test(1, 2, 8, 1, 4);
 
-        test(1, 2, MAX_VALUE - 8, 1, (MAX_VALUE - 7) / 2);
-        test(1, 2, MAX_VALUE - 7, 1, (MAX_VALUE - 7) / 2);
-        test(1, 2, MAX_VALUE - 6, 1, (MAX_VALUE - 5) / 2);
-        test(1, 2, MAX_VALUE - 5, 1, (MAX_VALUE - 5) / 2);
         test(1, 2, MAX_VALUE - 4, 1, (MAX_VALUE - 3) / 2);
         test(1, 2, MAX_VALUE - 3, 1, (MAX_VALUE - 3) / 2);
         test(1, 2, MAX_VALUE - 2, 1, (MAX_VALUE - 1) / 2);
         test(1, 2, MAX_VALUE - 1, 1, (MAX_VALUE - 1) / 2);
+        test(1, 2, MAX_VALUE, 1, 1073741824);
 
-        test(1, 2, 9, 1, 5);
-        test(1, 2, 10, 1, 5);
-        test(1, 2, 11, 1, 6);
-        test(1, 2, 12, 1, 6);
-        test(1, 2, 13, 1, 7);
-        test(1, 2, 14, 1, 7);
-        test(1, 2, 15, 1, 8);
-        test(1, 2, 16, 1, 8);
-        test(1, 2, 17, 1, 9);
-        test(1, 2, 18, 1, 9);
-        test(1, 2, 19, 1, 10);
-        test(1, 2, 20, 1, 10);
-
-        test(1, 2, 35, 1, 18);
         test(1, 2, 36, 1, 18);
-        test(1, 2, 77, 1, 39);
         test(1, 2, 78, 1, 39);
-        test(1, 2, 531, 1, 266);
         test(1, 2, 532, 1, 266);
         test(1, 2, 65473, 1, 32737);
-        test(1, 2, 65474, 1, 32737);
         test(1, 2, 6352441, 1, 3176221);
-        test(1, 2, 6352442, 1, 3176221);
-        test(1, 2, 52113465, 1, 26056733);
         test(1, 2, 52113466, 1, 26056733);
 
-        test(1, 2, 665, 1, 333);
         test(1, 2, 666, 1, 333);
         test(1, 2, 777, 1, 389);
-        test(1, 2, 778, 1, 389);
-        test(1, 2, 887, 1, 444);
         test(1, 2, 888, 1, 444);
 
         //endregion
@@ -369,9 +474,6 @@ public class TestFlat {
         test(2, 1, 3, 1, 2);
         test(2, 1, 4, 2, 2);
         test(2, 1, 5, 1, 3);
-        test(2, 1, 6, 2, 3);
-        test(2, 1, 7, 1, 4);
-        test(2, 1, 8, 2, 4);
 
         test(2, 1, MAX_VALUE - 4, 1, (MAX_VALUE - 3) / 2);
         test(2, 1, MAX_VALUE - 3, 2, (MAX_VALUE - 3) / 2);
@@ -379,43 +481,18 @@ public class TestFlat {
         test(2, 1, MAX_VALUE - 1, 2, (MAX_VALUE - 1) / 2);
         test(2, 1, MAX_VALUE, 1, 1_073_741_824);
 
-        test(2, 1, 9, 1, 5);
-        test(2, 1, 10, 2, 5);
-        test(2, 1, 11, 1, 6);
-        test(2, 1, 12, 2, 6);
-        test(2, 1, 13, 1, 7);
-        test(2, 1, 14, 2, 7);
-        test(2, 1, 15, 1, 8);
-        test(2, 1, 16, 2, 8);
-        test(2, 1, 17, 1, 9);
-        test(2, 1, 18, 2, 9);
-        test(2, 1, 19, 1, 10);
-        test(2, 1, 20, 2, 10);
-
-        test(2, 1, 35, 1, 18);
         test(2, 1, 36, 2, 18);
         test(2, 1, 77, 1, 39);
-        test(2, 1, 78, 2, 39);
-        test(2, 1, 531, 1, 266);
         test(2, 1, 532, 2, 266);
         test(2, 1, 65473, 1, 32737);
-        test(2, 1, 65474, 2, 32737);
-        test(2, 1, 6352441, 1, 3176221);
         test(2, 1, 6352442, 2, 3176221);
         test(2, 1, 52_113_465, 1, 26056733);
-        test(2, 1, 52113466, 2, 26056733);
-        test(2, 1, 527223411, 1, 263611706);
         test(2, 1, 527_223_412, 2, 263611706);
         test(2, 1, 1424511321, 1, 712255661);
-        test(2, 1, 1_424_511_322, 2, 712255661);
-        test(2, 1, 2046378941, 1, 1023189471);
         test(2, 1, 2_046_378_942, 2, 1023189471);
 
-        test(2, 1, 665, 1, 333);
         test(2, 1, 666, 2, 333);
         test(2, 1, 777, 1, 389);
-        test(2, 1, 778, 2, 389);
-        test(2, 1, 887, 1, 444);
         test(2, 1, 888, 2, 444);
         //endregion
 
@@ -473,6 +550,33 @@ public class TestFlat {
         test(888888, 1, 2, 2, 1);
         //endregion
 
+        //region first flat, two flat on the floor and many floors(6)
+        test(1, 2, 1, 1, 1);
+        test(2, 2, 1, 1, 1);
+        test(3, 2, 1, 1, 1);
+        test(4, 2, 1, 1, 1);
+        test(5, 2, 1, 1, 1);
+
+        test((MAX_VALUE / 2) - 4, 2, 1, 1, 1);
+        test((MAX_VALUE / 2) - 3, 2, 1, 1, 1);
+        test((MAX_VALUE / 2) - 2, 2, 1, 1, 1);
+        test((MAX_VALUE / 2) - 1, 2, 1, 1, 1);
+        test(MAX_VALUE / 2, 2, 1, 1, 1);
+
+        test(332, 2, 1, 1, 1);
+        test(4622, 2, 1, 1, 1);
+        test(65276, 2, 1, 1, 1);
+        test(7464576, 2, 1, 1, 1);
+        test(257664778, 2, 1, 1, 1);
+
+        test(666, 2, 1, 1, 1);
+        test(666666, 2, 1, 1, 1);
+        test(777, 2, 1, 1, 1);
+        test(777777, 2, 1, 1, 1);
+        test(888, 2, 1, 1, 1);
+        test(888888, 2, 1, 1, 1);
+        //endregion
+
         //region first flat, many flat on the floor, first floor(7)
         test(1, 1, 1, 1, 1);
         test(1, 2, 1, 1, 1);
@@ -525,6 +629,33 @@ public class TestFlat {
         test(1, 777777, 2, 1, 1);
         test(1, 888, 2, 1, 1);
         test(1, 888888, 2, 1, 1);
+        //endregion
+
+        //region first flat, many flat on the floor, first floor(7)
+        test(2, 1, 1, 1, 1);
+        test(2, 2, 1, 1, 1);
+        test(2, 3, 1, 1, 1);
+        test(2, 4, 1, 1, 1);
+        test(2, 5, 1, 1, 1);
+
+        test(2, (MAX_VALUE / 2) - 4, 1, 1, 1);
+        test(2, (MAX_VALUE / 2) - 3, 1, 1, 1);
+        test(2, (MAX_VALUE / 2) - 2, 1, 1, 1);
+        test(2, (MAX_VALUE / 2) - 1, 1, 1, 1);
+        test(2, MAX_VALUE / 2, 1, 1, 1);
+
+        test(2, 332, 1, 1, 1);
+        test(2, 4622, 1, 1, 1);
+        test(2, 65276, 1, 1, 1);
+        test(2, 7464576, 1, 1, 1);
+        test(2, 257664778, 1, 1, 1);
+
+        test(2, 666, 1, 1, 1);
+        test(2, 666666, 1, 1, 1);
+        test(2, 777, 1, 1, 1);
+        test(2, 777777, 1, 1, 1);
+        test(2, 888, 1, 1, 1);
+        test(2, 888888, 1, 1, 1);
         //endregion
 
         //region Max flat, one flat on the floor and many floors(8)
@@ -581,6 +712,33 @@ public class TestFlat {
         test(888888, 1, MAX_VALUE - 1, 819126, 2416);
         //endregion
 
+        //region Max flat, two flat on the floor and many floors(8)
+        test(1, 2, MAX_VALUE, 1, MAX_VALUE / 2 + 1);
+        test(2, 2, MAX_VALUE, 2, MAX_VALUE / 4 + 1);
+        test(3, 2, MAX_VALUE, 1, MAX_VALUE / 6 + 1);
+        test(4, 2, MAX_VALUE, 4, MAX_VALUE / 8 + 1);
+        test(5, 2, MAX_VALUE, 4, MAX_VALUE / 10 + 1);
+
+        test((MAX_VALUE / 2) - 4, 2, MAX_VALUE, 5, 2);
+        test((MAX_VALUE / 2) - 3, 2, MAX_VALUE, 4, 2);
+        test((MAX_VALUE / 2) - 2, 2, MAX_VALUE, 3, 2);
+        test((MAX_VALUE / 2) - 1, 2, MAX_VALUE, 2, 2);
+        test(MAX_VALUE / 2, 2, MAX_VALUE, 1, 2);
+
+        test(332, 2, MAX_VALUE, 40, 3234163);
+        test(4622, 2, MAX_VALUE, 382, 232312);
+        test(65276, 2, MAX_VALUE, 16900, 16450);
+        test(7464576, 2, MAX_VALUE, 6307456, 144);
+        test(257664778, 2, MAX_VALUE, 43082712, 5);
+
+        test(666, 2, MAX_VALUE, 640, 1612225);
+        test(666666, 2, MAX_VALUE, 409564, 1611);
+        test(777, 2, MAX_VALUE, 85, 1381908);
+        test(777777, 2, MAX_VALUE, 409564, 1381);
+        test(888, 2, MAX_VALUE, 640, 1209169);
+        test(888888, 2, MAX_VALUE, 854008, 1208);
+        //endregion
+
         //region Max flat, many flat on the floor and first floors(9)
         test(1, 1, MAX_VALUE, 1, MAX_VALUE);
         test(1, 2, MAX_VALUE, 1, MAX_VALUE / 2 + 1);
@@ -634,6 +792,33 @@ public class TestFlat {
         test(1, 888, MAX_VALUE - 1, 1, 2418338);
         test(1, 888888, MAX_VALUE - 1, 1, 2416);
         //endregion
+
+        //region Max flat, many flat on the floor and first floors(9)
+        test(2, 1, MAX_VALUE, 1, MAX_VALUE / 2 + 1);
+        test(2, 2, MAX_VALUE, 2, MAX_VALUE / 4 + 1);
+        test(2, 3, MAX_VALUE, 1, MAX_VALUE / 6 + 1);
+        test(2, 4, MAX_VALUE, 2, MAX_VALUE / 8 + 1);
+        test(2, 5, MAX_VALUE, 2, MAX_VALUE / 10 + 1);
+
+        test(2, (MAX_VALUE / 2) - 4, MAX_VALUE, 1, 2);
+        test(2, (MAX_VALUE / 2) - 3, MAX_VALUE, 1, 2);
+        test(2, (MAX_VALUE / 2) - 2, MAX_VALUE, 1, 2);
+        test(2, (MAX_VALUE / 2) - 1, MAX_VALUE, 1, 2);
+        test(2, MAX_VALUE / 2, MAX_VALUE, 1, 2);
+
+        test(2, 332, MAX_VALUE, 1, 3234163);
+        test(2, 4622, MAX_VALUE, 1, 232312);
+        test(2, 65276, MAX_VALUE, 1, 16450);
+        test(2, 7464576, MAX_VALUE, 2, 144);
+        test(2, 257664778, MAX_VALUE, 1, 5);
+
+        test(2, 666, MAX_VALUE, 2, 1612225);
+        test(2, 666666, MAX_VALUE, 2, 1611);
+        test(2, 777, MAX_VALUE, 1, 1381908);
+        test(2, 777777, MAX_VALUE, 2, 1381);
+        test(2, 888, MAX_VALUE, 2, 1209169);
+        test(2, 888888, MAX_VALUE, 2, 1208);
+        //endregion
     }
 
     @Test//несколько квартир на одном этаже одного подъезда
@@ -644,70 +829,20 @@ public class TestFlat {
         test(2, 2, 2, 1, 1);
         test(2, 2, 3, 2, 1);
         test(2, 2, 4, 2, 1);
-
         test(2, 2, 5, 1, 2);
-        test(2, 2, 6, 1, 2);
-        test(2, 2, 7, 2, 2);
-        test(2, 2, 8, 2, 2);
-
-        test(2, 2, 9, 1, 3);
-        test(2, 2, 10, 1, 3);
-        test(2, 2, 11, 2, 3);
-        test(2, 2, 12, 2, 3);
-
-        test(2, 2, 13, 1, 4);
-        test(2, 2, 14, 1, 4);
-        test(2, 2, 15, 2, 4);
-        test(2, 2, 16, 2, 4);
-
-        test(2, 2, MAX_VALUE - 10, 1, (MAX_VALUE - 7) / 4);
-        test(2, 2, MAX_VALUE - 9, 1, (MAX_VALUE - 7) / 4);
-        test(2, 2, MAX_VALUE - 8, 2, (MAX_VALUE - 7) / 4);
-        test(2, 2, MAX_VALUE - 7, 2, (MAX_VALUE - 7) / 4);
 
         test(2, 2, MAX_VALUE - 6, 1, (MAX_VALUE - 3) / 4);
         test(2, 2, MAX_VALUE - 5, 1, (MAX_VALUE - 3) / 4);
         test(2, 2, MAX_VALUE - 4, 2, (MAX_VALUE - 3) / 4);
         test(2, 2, MAX_VALUE - 3, 2, (MAX_VALUE - 3) / 4);
-
         test(2, 2, MAX_VALUE - 2, 1, 536870912);
         test(2, 2, MAX_VALUE - 1, 1, 536870912);
         test(2, 2, MAX_VALUE, 2, 536870912);
-
-        test(2, 2, 17, 1, 5);
-        test(2, 2, 18, 1, 5);
-        test(2, 2, 19, 2, 5);
-        test(2, 2, 20, 2, 5);
-
-        test(2, 2, 21, 1, 6);
-        test(2, 2, 22, 1, 6);
-        test(2, 2, 23, 2, 6);
-        test(2, 2, 24, 2, 6);
-
-        test(2, 2, 33, 1, 9);
-        test(2, 2, 34, 1, 9);
-        test(2, 2, 35, 2, 9);
-        test(2, 2, 36, 2, 9);
-
-        test(2, 2, 77, 1, 20);
-        test(2, 2, 78, 1, 20);
-        test(2, 2, 79, 2, 20);
-        test(2, 2, 80, 2, 20);
-
-        test(2, 2, 533, 1, 134);
-        test(2, 2, 534, 1, 134);
-        test(2, 2, 535, 2, 134);
-        test(2, 2, 536, 2, 134);
 
         test(2, 2, 65473, 1, 16369);
         test(2, 2, 65474, 1, 16369);
         test(2, 2, 65475, 2, 16369);
         test(2, 2, 65476, 2, 16369);
-
-        test(2, 2, 6352441, 1, 1588111);
-        test(2, 2, 6352442, 1, 1588111);
-        test(2, 2, 6352443, 2, 1588111);
-        test(2, 2, 6352444, 2, 1588111);
 
         test(2, 2, 52113465, 1, 13028367);
         test(2, 2, 52113466, 1, 13028367);
@@ -718,11 +853,6 @@ public class TestFlat {
         test(2, 2, 666, 1, 167);
         test(2, 2, 667, 2, 167);
         test(2, 2, 668, 2, 167);
-
-        test(2, 2, 777, 1, 195);
-        test(2, 2, 778, 1, 195);
-        test(2, 2, 779, 2, 195);
-        test(2, 2, 780, 2, 195);
 
         test(2, 2, 885, 1, 222);
         test(2, 2, 886, 1, 222);
@@ -756,66 +886,38 @@ public class TestFlat {
 
         //region one floor, three apartments on the floor
         test(1, 3, 1, 1, 1);
-        test(1, 3, 2, 1, 1);
         test(1, 3, 3, 1, 1);
         test(1, 3, 4, 1, 2);
-        test(1, 3, 5, 1, 2);
         test(1, 3, 6, 1, 2);
         test(1, 3, 7, 1, 3);
-        test(1, 3, 8, 1, 3);
         test(1, 3, 9, 1, 3);
 
         test(1, 3, MAX_VALUE - 9, 1, (MAX_VALUE - 7) / 3);
-        test(1, 3, MAX_VALUE - 8, 1, (MAX_VALUE - 7) / 3);
         test(1, 3, MAX_VALUE - 7, 1, (MAX_VALUE - 7) / 3);
         test(1, 3, MAX_VALUE - 6, 1, (MAX_VALUE - 4) / 3);
-        test(1, 3, MAX_VALUE - 5, 1, (MAX_VALUE - 4) / 3);
         test(1, 3, MAX_VALUE - 4, 1, (MAX_VALUE - 4) / 3);
         test(1, 3, MAX_VALUE - 3, 1, (MAX_VALUE - 1) / 3);
-        test(1, 3, MAX_VALUE - 2, 1, (MAX_VALUE - 1) / 3);
         test(1, 3, MAX_VALUE - 1, 1, (MAX_VALUE - 1) / 3);
         test(1, 3, MAX_VALUE, 1, (MAX_VALUE) / 3 + 1);
 
-        test(1, 3, 10, 1, 4);
-        test(1, 3, 11, 1, 4);
-        test(1, 3, 12, 1, 4);
-        test(1, 3, 13, 1, 5);
-        test(1, 3, 14, 1, 5);
-        test(1, 3, 15, 1, 5);
-        test(1, 3, 16, 1, 6);
-        test(1, 3, 17, 1, 6);
-        test(1, 3, 18, 1, 6);
-        test(1, 3, 19, 1, 7);
-        test(1, 3, 20, 1, 7);
-        test(1, 3, 21, 1, 7);
-
         test(1, 3, 34, 1, 12);
-        test(1, 3, 35, 1, 12);
         test(1, 3, 36, 1, 12);
         test(1, 3, 76, 1, 26);
-        test(1, 3, 77, 1, 26);
         test(1, 3, 78, 1, 26);
         test(1, 3, 532, 1, 178);
-        test(1, 3, 533, 1, 178);
         test(1, 3, 534, 1, 178);
         test(1, 3, 65473, 1, 21825);
-        test(1, 3, 65474, 1, 21825);
         test(1, 3, 65475, 1, 21825);
         test(1, 3, 6352441, 1, 2117481);
-        test(1, 3, 6352442, 1, 2117481);
         test(1, 3, 6352443, 1, 2117481);
         test(1, 3, 52113463, 1, 17371155);
-        test(1, 3, 52113464, 1, 17371155);
         test(1, 3, 52113465, 1, 17371155);
 
         test(1, 3, 664, 1, 222);
-        test(1, 3, 665, 1, 222);
         test(1, 3, 666, 1, 222);
         test(1, 3, 775, 1, 259);
-        test(1, 3, 776, 1, 259);
         test(1, 3, 777, 1, 259);
         test(1, 3, 886, 1, 296);
-        test(1, 3, 887, 1, 296);
         test(1, 3, 888, 1, 296);
         //endregion
 
@@ -826,21 +928,6 @@ public class TestFlat {
         test(2, 3, 4, 2, 1);
         test(2, 3, 5, 2, 1);
         test(2, 3, 6, 2, 1);
-
-        test(2, 3, 7, 1, 2);
-        test(2, 3, 8, 1, 2);
-        test(2, 3, 9, 1, 2);
-        test(2, 3, 10, 2, 2);
-        test(2, 3, 11, 2, 2);
-        test(2, 3, 12, 2, 2);
-
-        test(2, 3, MAX_VALUE - 12, 1, (MAX_VALUE - 7) / 6);
-        test(2, 3, MAX_VALUE - 11, 1, (MAX_VALUE - 7) / 6);
-        test(2, 3, MAX_VALUE - 10, 1, (MAX_VALUE - 7) / 6);
-        test(2, 3, MAX_VALUE - 9, 2, (MAX_VALUE - 7) / 6);
-        test(2, 3, MAX_VALUE - 8, 2, (MAX_VALUE - 7) / 6);
-        test(2, 3, MAX_VALUE - 7, 2, (MAX_VALUE - 7) / 6);
-
         test(2, 3, MAX_VALUE - 6, 1, (MAX_VALUE - 1) / 6);
         test(2, 3, MAX_VALUE - 5, 1, (MAX_VALUE - 1) / 6);
         test(2, 3, MAX_VALUE - 4, 1, (MAX_VALUE - 1) / 6);
@@ -850,46 +937,19 @@ public class TestFlat {
 
         test(2, 3, MAX_VALUE, 1, 357913942);
 
-        test(2, 3, 13, 1, 3);
-        test(2, 3, 14, 1, 3);
-        test(2, 3, 15, 1, 3);
-        test(2, 3, 16, 2, 3);
-        test(2, 3, 17, 2, 3);
-        test(2, 3, 18, 2, 3);
-
-        test(2, 3, 31, 1, 6);
-        test(2, 3, 32, 1, 6);
-        test(2, 3, 33, 1, 6);
-        test(2, 3, 34, 2, 6);
-        test(2, 3, 35, 2, 6);
-        test(2, 3, 36, 2, 6);
-
-        test(2, 3, 97, 1, 17);
-        test(2, 3, 98, 1, 17);
-        test(2, 3, 99, 1, 17);
-        test(2, 3, 100, 2, 17);
-        test(2, 3, 101, 2, 17);
-        test(2, 3, 102, 2, 17);
-
         test(2, 3, 6475, 1, 1080);
-        test(2, 3, 6476, 1, 1080);
         test(2, 3, 6477, 1, 1080);
         test(2, 3, 6478, 2, 1080);
-        test(2, 3, 6479, 2, 1080);
         test(2, 3, 6480, 2, 1080);
 
         test(2, 3, 373243, 1, 62208);
-        test(2, 3, 373244, 1, 62208);
         test(2, 3, 373245, 1, 62208);
         test(2, 3, 373246, 2, 62208);
-        test(2, 3, 373247, 2, 62208);
         test(2, 3, 373248, 2, 62208);
 
         test(2, 3, 16796155, 1, 2799360);
-        test(2, 3, 16796156, 1, 2799360);
         test(2, 3, 16796157, 1, 2799360);
         test(2, 3, 16796158, 2, 2799360);
-        test(2, 3, 16796159, 2, 2799360);
         test(2, 3, 16796160, 2, 2799360);
         //endregion
 
@@ -922,21 +982,6 @@ public class TestFlat {
         test(1, 4, 3, 1, 1);
         test(1, 4, 4, 1, 1);
 
-        test(1, 4, 5, 1, 2);
-        test(1, 4, 6, 1, 2);
-        test(1, 4, 7, 1, 2);
-        test(1, 4, 8, 1, 2);
-
-        test(1, 4, 9, 1, 3);
-        test(1, 4, 10, 1, 3);
-        test(1, 4, 11, 1, 3);
-        test(1, 4, 12, 1, 3);
-
-        test(1, 4, MAX_VALUE - 10, 1, (MAX_VALUE - 7) / 4);
-        test(1, 4, MAX_VALUE - 9, 1, (MAX_VALUE - 7) / 4);
-        test(1, 4, MAX_VALUE - 8, 1, (MAX_VALUE - 7) / 4);
-        test(1, 4, MAX_VALUE - 7, 1, (MAX_VALUE - 7) / 4);
-
         test(1, 4, MAX_VALUE - 6, 1, (MAX_VALUE - 3) / 4);
         test(1, 4, MAX_VALUE - 5, 1, (MAX_VALUE - 3) / 4);
         test(1, 4, MAX_VALUE - 4, 1, (MAX_VALUE - 3) / 4);
@@ -946,94 +991,28 @@ public class TestFlat {
         test(1, 4, MAX_VALUE - 1, 1, 536870912);
         test(1, 4, MAX_VALUE, 1, 536870912);
 
-        test(1, 4, 13, 1, 4);
-        test(1, 4, 14, 1, 4);
-        test(1, 4, 15, 1, 4);
-        test(1, 4, 16, 1, 4);
-
-        test(1, 4, 17, 1, 5);
-        test(1, 4, 18, 1, 5);
-        test(1, 4, 19, 1, 5);
-        test(1, 4, 20, 1, 5);
-
-        test(1, 4, 21, 1, 6);
-        test(1, 4, 22, 1, 6);
-        test(1, 4, 23, 1, 6);
-        test(1, 4, 24, 1, 6);
-
-        test(1, 4, 33, 1, 9);
-        test(1, 4, 34, 1, 9);
-        test(1, 4, 35, 1, 9);
-        test(1, 4, 36, 1, 9);
-
-        test(1, 4, 77, 1, 20);
-        test(1, 4, 78, 1, 20);
-        test(1, 4, 79, 1, 20);
-        test(1, 4, 80, 1, 20);
-
         test(1, 4, 533, 1, 134);
-        test(1, 4, 534, 1, 134);
         test(1, 4, 535, 1, 134);
-        test(1, 4, 536, 1, 134);
-
-        test(1, 4, 65473, 1, 16369);
         test(1, 4, 65474, 1, 16369);
-        test(1, 4, 65475, 1, 16369);
         test(1, 4, 65476, 1, 16369);
-
         test(1, 4, 6352441, 1, 1588111);
-        test(1, 4, 6352442, 1, 1588111);
         test(1, 4, 6352443, 1, 1588111);
-        test(1, 4, 6352444, 1, 1588111);
-
-        test(1, 4, 52113465, 1, 13028367);
         test(1, 4, 52113466, 1, 13028367);
-        test(1, 4, 52113467, 1, 13028367);
         test(1, 4, 52113468, 1, 13028367);
 
         test(1, 4, 665, 1, 167);
-        test(1, 4, 666, 1, 167);
         test(1, 4, 667, 1, 167);
-        test(1, 4, 668, 1, 167);
-
         test(1, 4, 777, 1, 195);
-        test(1, 4, 778, 1, 195);
         test(1, 4, 779, 1, 195);
-        test(1, 4, 780, 1, 195);
-
-        test(1, 4, 885, 1, 222);
         test(1, 4, 886, 1, 222);
-        test(1, 4, 887, 1, 222);
         test(1, 4, 888, 1, 222);
         //endregion
 
         //region two floor, four apartments on the floor
         test(2, 4, 1, 1, 1);
-        test(2, 4, 2, 1, 1);
         test(2, 4, 3, 1, 1);
-        test(2, 4, 4, 1, 1);
         test(2, 4, 5, 2, 1);
-        test(2, 4, 6, 2, 1);
         test(2, 4, 7, 2, 1);
-        test(2, 4, 8, 2, 1);
-
-        test(2, 4, 9, 1, 2);
-        test(2, 4, 10, 1, 2);
-        test(2, 4, 11, 1, 2);
-        test(2, 4, 12, 1, 2);
-        test(2, 4, 13, 2, 2);
-        test(2, 4, 14, 2, 2);
-        test(2, 4, 15, 2, 2);
-        test(2, 4, 16, 2, 2);
-
-        test(2, 4, MAX_VALUE - 14, 1, (MAX_VALUE - 7) / 8);
-        test(2, 4, MAX_VALUE - 13, 1, (MAX_VALUE - 7) / 8);
-        test(2, 4, MAX_VALUE - 12, 1, (MAX_VALUE - 7) / 8);
-        test(2, 4, MAX_VALUE - 11, 1, (MAX_VALUE - 7) / 8);
-        test(2, 4, MAX_VALUE - 10, 2, (MAX_VALUE - 7) / 8);
-        test(2, 4, MAX_VALUE - 9, 2, (MAX_VALUE - 7) / 8);
-        test(2, 4, MAX_VALUE - 8, 2, (MAX_VALUE - 7) / 8);
-        test(2, 4, MAX_VALUE - 7, 2, (MAX_VALUE - 7) / 8);
 
         test(2, 4, MAX_VALUE - 6, 1, 268435456);
         test(2, 4, MAX_VALUE - 5, 1, 268435456);
@@ -1043,68 +1022,25 @@ public class TestFlat {
         test(2, 4, MAX_VALUE - 1, 2, 268435456);
         test(2, 4, MAX_VALUE, 2, 268435456);
 
-        test(2, 4, 17, 1, 3);
-        test(2, 4, 18, 1, 3);
-        test(2, 4, 19, 1, 3);
-        test(2, 4, 20, 1, 3);
-        test(2, 4, 21, 2, 3);
-        test(2, 4, 22, 2, 3);
-        test(2, 4, 23, 2, 3);
-        test(2, 4, 24, 2, 3);
-
-        test(2, 4, 33, 1, 5);
-        test(2, 4, 34, 1, 5);
-        test(2, 4, 35, 1, 5);
-        test(2, 4, 36, 1, 5);
-        test(2, 4, 37, 2, 5);
-        test(2, 4, 38, 2, 5);
-        test(2, 4, 39, 2, 5);
-        test(2, 4, 40, 2, 5);
-
         test(2, 4, 313, 1, 40);
-        test(2, 4, 314, 1, 40);
         test(2, 4, 315, 1, 40);
-        test(2, 4, 316, 1, 40);
         test(2, 4, 317, 2, 40);
-        test(2, 4, 318, 2, 40);
         test(2, 4, 319, 2, 40);
-        test(2, 4, 320, 2, 40);
 
-        test(2, 4, 9209, 1, 1152);
         test(2, 4, 9210, 1, 1152);
-        test(2, 4, 9211, 1, 1152);
         test(2, 4, 9212, 1, 1152);
-        test(2, 4, 9213, 2, 1152);
         test(2, 4, 9214, 2, 1152);
-        test(2, 4, 9215, 2, 1152);
         test(2, 4, 9216, 2, 1152);
 
-        test(2, 4, 589_817, 1, 73728);
         test(2, 4, 589_818, 1, 73728);
-        test(2, 4, 589_819, 1, 73728);
         test(2, 4, 589_820, 1, 73728);
-        test(2, 4, 589_821, 2, 73728);
         test(2, 4, 589_822, 2, 73728);
-        test(2, 4, 589_823, 2, 73728);
         test(2, 4, 589_824, 2, 73728);
 
-        test(2, 4, 65_011_705, 1, 8_126_464);
-        test(2, 4, 65_011_706, 1, 8_126_464);
-        test(2, 4, 65_011_707, 1, 8_126_464);
-        test(2, 4, 65_011_708, 1, 8_126_464);
-        test(2, 4, 65_011_709, 2, 8_126_464);
-        test(2, 4, 65_011_710, 2, 8_126_464);
-        test(2, 4, 65_011_711, 2, 8_126_464);
-        test(2, 4, 65_011_712, 2, 8_126_464);
-
         test(2, 4, 2_013_265_913, 1, 251_658_240);
-        test(2, 4, 2_013_265_914, 1, 251_658_240);
         test(2, 4, 2_013_265_915, 1, 251_658_240);
-        test(2, 4, 2_013_265_916, 1, 251_658_240);
         test(2, 4, 2_013_265_917, 2, 251_658_240);
-        test(2, 4, 2_013_265_918, 2, 251_658_240);
         test(2, 4, 2_013_265_919, 2, 251_658_240);
-        test(2, 4, 2_013_265_920, 2, 251_658_240);
         //endregion
 
         //region MAX/4 floor, four apartments on the floor
@@ -1117,24 +1053,6 @@ public class TestFlat {
         test(MAX_VALUE / 4, 4, 7, 2, 1);
         test(MAX_VALUE / 4, 4, 8, 2, 1);
 
-        test(MAX_VALUE / 4, 4, 9, 3, 1);
-        test(MAX_VALUE / 4, 4, 10, 3, 1);
-        test(MAX_VALUE / 4, 4, 11, 3, 1);
-        test(MAX_VALUE / 4, 4, 12, 3, 1);
-        test(MAX_VALUE / 4, 4, 13, 4, 1);
-        test(MAX_VALUE / 4, 4, 14, 4, 1);
-        test(MAX_VALUE / 4, 4, 15, 4, 1);
-        test(MAX_VALUE / 4, 4, 16, 4, 1);
-
-        test(MAX_VALUE / 4, 4, MAX_VALUE - 16, (MAX_VALUE / 4) - 3, 1);
-        test(MAX_VALUE / 4, 4, MAX_VALUE - 15, (MAX_VALUE / 4) - 3, 1);
-        test(MAX_VALUE / 4, 4, MAX_VALUE - 14, (MAX_VALUE / 4) - 2, 1);
-        test(MAX_VALUE / 4, 4, MAX_VALUE - 13, (MAX_VALUE / 4) - 2, 1);
-        test(MAX_VALUE / 4, 4, MAX_VALUE - 12, (MAX_VALUE / 4) - 2, 1);
-        test(MAX_VALUE / 4, 4, MAX_VALUE - 11, (MAX_VALUE / 4) - 2, 1);
-        test(MAX_VALUE / 4, 4, MAX_VALUE - 10, (MAX_VALUE / 4) - 1, 1);
-        test(MAX_VALUE / 4, 4, MAX_VALUE - 9, (MAX_VALUE / 4) - 1, 1);
-
         test(MAX_VALUE / 4, 4, MAX_VALUE - 8, (MAX_VALUE / 4) - 1, 1);
         test(MAX_VALUE / 4, 4, MAX_VALUE - 7, (MAX_VALUE / 4) - 1, 1);
         test(MAX_VALUE / 4, 4, MAX_VALUE - 6, (MAX_VALUE / 4), 1);
@@ -1145,33 +1063,6 @@ public class TestFlat {
         test(MAX_VALUE / 4, 4, MAX_VALUE - 1, 1, 2);
         test(MAX_VALUE / 4, 4, MAX_VALUE, 1, 2);
 
-        test(MAX_VALUE / 4, 4, 17, 5, 1);
-        test(MAX_VALUE / 4, 4, 18, 5, 1);
-        test(MAX_VALUE / 4, 4, 19, 5, 1);
-        test(MAX_VALUE / 4, 4, 20, 5, 1);
-        test(MAX_VALUE / 4, 4, 21, 6, 1);
-        test(MAX_VALUE / 4, 4, 22, 6, 1);
-        test(MAX_VALUE / 4, 4, 23, 6, 1);
-        test(MAX_VALUE / 4, 4, 24, 6, 1);
-
-        test(MAX_VALUE / 4, 4, 33, 9, 1);
-        test(MAX_VALUE / 4, 4, 34, 9, 1);
-        test(MAX_VALUE / 4, 4, 35, 9, 1);
-        test(MAX_VALUE / 4, 4, 36, 9, 1);
-        test(MAX_VALUE / 4, 4, 37, 10, 1);
-        test(MAX_VALUE / 4, 4, 38, 10, 1);
-        test(MAX_VALUE / 4, 4, 39, 10, 1);
-        test(MAX_VALUE / 4, 4, 40, 10, 1);
-
-        test(MAX_VALUE / 4, 4, 313, 79, 1);
-        test(MAX_VALUE / 4, 4, 314, 79, 1);
-        test(MAX_VALUE / 4, 4, 315, 79, 1);
-        test(MAX_VALUE / 4, 4, 316, 79, 1);
-        test(MAX_VALUE / 4, 4, 317, 80, 1);
-        test(MAX_VALUE / 4, 4, 318, 80, 1);
-        test(MAX_VALUE / 4, 4, 319, 80, 1);
-        test(MAX_VALUE / 4, 4, 320, 80, 1);
-
         test(MAX_VALUE / 4, 4, 9209, 2303, 1);
         test(MAX_VALUE / 4, 4, 9210, 2303, 1);
         test(MAX_VALUE / 4, 4, 9211, 2303, 1);
@@ -1180,15 +1071,6 @@ public class TestFlat {
         test(MAX_VALUE / 4, 4, 9214, 2304, 1);
         test(MAX_VALUE / 4, 4, 9215, 2304, 1);
         test(MAX_VALUE / 4, 4, 9216, 2304, 1);
-
-        test(MAX_VALUE / 4, 4, 589_817, 147455, 1);
-        test(MAX_VALUE / 4, 4, 589_818, 147455, 1);
-        test(MAX_VALUE / 4, 4, 589_819, 147455, 1);
-        test(MAX_VALUE / 4, 4, 589820, 147455, 1);
-        test(MAX_VALUE / 4, 4, 589_821, 147456, 1);
-        test(MAX_VALUE / 4, 4, 589_822, 147456, 1);
-        test(MAX_VALUE / 4, 4, 589_823, 147456, 1);
-        test(MAX_VALUE / 4, 4, 589_824, 147456, 1);
 
         test(MAX_VALUE / 4, 4, 65_011_705, 16252927, 1);
         test(MAX_VALUE / 4, 4, 65_011_706, 16252927, 1);
@@ -1570,6 +1452,7 @@ public class TestFlat {
         test(2, MAX_VALUE / 2, 4, 1, 1);
         test(2, MAX_VALUE / 2, 5, 1, 1);
         test(2, MAX_VALUE / 2, 6, 1, 1);
+        test(2, MAX_VALUE, MAX_VALUE, 1, -1073741822);
 
         test(2, MAX_VALUE / 2, MAX_VALUE / 2 - 5, 1, 1);
         test(2, MAX_VALUE / 2, MAX_VALUE / 2 - 4, 1, 1);
@@ -1577,7 +1460,7 @@ public class TestFlat {
         test(2, MAX_VALUE / 2, MAX_VALUE / 2 - 2, 1, 1);
         test(2, MAX_VALUE / 2, MAX_VALUE / 2 - 1, 1, 1);
         test(2, MAX_VALUE / 2, MAX_VALUE / 2, 1, 1);
-        test(2, MAX_VALUE / 2, MAX_VALUE / 2+1 , 2, 1);
+        test(2, MAX_VALUE / 2, MAX_VALUE / 2 + 1, 2, 1);
 
         test(2, MAX_VALUE / 2, MAX_VALUE - 5, 2, 1);
         test(2, MAX_VALUE / 2, MAX_VALUE - 4, 2, 1);
@@ -1598,175 +1481,6 @@ public class TestFlat {
         test(9, 4, 321, 9, 9);
         test(9, 4, 322, 9, 9);
         test(9, 4, 323, 9, 9);
-        test(9, 4, 324, 9, 9);
-
-        test(9, 4, 5, 2, 1);
-        test(9, 4, 8, 2, 1);
-        test(9, 4, 9, 3, 1);
-        test(9, 4, 12, 3, 1);
-        test(9, 4, 13, 4, 1);
-        test(9, 4, 16, 4, 1);
-        test(9, 4, 17, 5, 1);
-        test(9, 4, 20, 5, 1);
-        test(9, 4, 21, 6, 1);
-        test(9, 4, 24, 6, 1);
-        test(9, 4, 25, 7, 1);
-        test(9, 4, 28, 7, 1);
-        test(9, 4, 29, 8, 1);
-        test(9, 4, 32, 8, 1);
-        test(9, 4, 33, 9, 1);
-        test(9, 4, 36, 9, 1);
-
-        test(9, 4, 37, 1, 2);
-        test(9, 4, 40, 1, 2);
-        test(9, 4, 41, 2, 2);
-        test(9, 4, 44, 2, 2);
-        test(9, 4, 45, 3, 2);
-        test(9, 4, 48, 3, 2);
-        test(9, 4, 49, 4, 2);
-        test(9, 4, 52, 4, 2);
-        test(9, 4, 53, 5, 2);
-        test(9, 4, 56, 5, 2);
-        test(9, 4, 57, 6, 2);
-        test(9, 4, 60, 6, 2);
-        test(9, 4, 61, 7, 2);
-        test(9, 4, 64, 7, 2);
-        test(9, 4, 65, 8, 2);
-        test(9, 4, 68, 8, 2);
-        test(9, 4, 69, 9, 2);
-        test(9, 4, 72, 9, 2);
-
-        test(9, 4, 73, 1, 3);
-        test(9, 4, 76, 1, 3);
-        test(9, 4, 77, 2, 3);
-        test(9, 4, 80, 2, 3);
-        test(9, 4, 81, 3, 3);
-        test(9, 4, 84, 3, 3);
-        test(9, 4, 85, 4, 3);
-        test(9, 4, 88, 4, 3);
-        test(9, 4, 89, 5, 3);
-        test(9, 4, 92, 5, 3);
-        test(9, 4, 93, 6, 3);
-        test(9, 4, 96, 6, 3);
-        test(9, 4, 97, 7, 3);
-        test(9, 4, 100, 7, 3);
-        test(9, 4, 101, 8, 3);
-        test(9, 4, 104, 8, 3);
-        test(9, 4, 105, 9, 3);
-        test(9, 4, 108, 9, 3);
-
-        test(9, 4, 109, 1, 4);
-        test(9, 4, 112, 1, 4);
-        test(9, 4, 113, 2, 4);
-        test(9, 4, 116, 2, 4);
-        test(9, 4, 117, 3, 4);
-        test(9, 4, 120, 3, 4);
-        test(9, 4, 121, 4, 4);
-        test(9, 4, 124, 4, 4);
-        test(9, 4, 125, 5, 4);
-        test(9, 4, 128, 5, 4);
-        test(9, 4, 129, 6, 4);
-        test(9, 4, 132, 6, 4);
-        test(9, 4, 133, 7, 4);
-        test(9, 4, 136, 7, 4);
-        test(9, 4, 137, 8, 4);
-        test(9, 4, 140, 8, 4);
-        test(9, 4, 141, 9, 4);
-        test(9, 4, 144, 9, 4);
-
-        test(9, 4, 145, 1, 5);
-        test(9, 4, 148, 1, 5);
-        test(9, 4, 149, 2, 5);
-        test(9, 4, 152, 2, 5);
-        test(9, 4, 153, 3, 5);
-        test(9, 4, 156, 3, 5);
-        test(9, 4, 157, 4, 5);
-        test(9, 4, 160, 4, 5);
-        test(9, 4, 161, 5, 5);
-        test(9, 4, 164, 5, 5);
-        test(9, 4, 165, 6, 5);
-        test(9, 4, 168, 6, 5);
-        test(9, 4, 169, 7, 5);
-        test(9, 4, 172, 7, 5);
-        test(9, 4, 173, 8, 5);
-        test(9, 4, 176, 8, 5);
-        test(9, 4, 177, 9, 5);
-        test(9, 4, 180, 9, 5);
-
-        test(9, 4, 181, 1, 6);
-        test(9, 4, 184, 1, 6);
-        test(9, 4, 185, 2, 6);
-        test(9, 4, 188, 2, 6);
-        test(9, 4, 189, 3, 6);
-        test(9, 4, 192, 3, 6);
-        test(9, 4, 193, 4, 6);
-        test(9, 4, 196, 4, 6);
-        test(9, 4, 197, 5, 6);
-        test(9, 4, 200, 5, 6);
-        test(9, 4, 201, 6, 6);
-        test(9, 4, 204, 6, 6);
-        test(9, 4, 205, 7, 6);
-        test(9, 4, 208, 7, 6);
-        test(9, 4, 209, 8, 6);
-        test(9, 4, 212, 8, 6);
-        test(9, 4, 215, 9, 6);
-        test(9, 4, 216, 9, 6);
-
-        test(9, 4, 217, 1, 7);
-        test(9, 4, 220, 1, 7);
-        test(9, 4, 221, 2, 7);
-        test(9, 4, 224, 2, 7);
-        test(9, 4, 225, 3, 7);
-        test(9, 4, 228, 3, 7);
-        test(9, 4, 229, 4, 7);
-        test(9, 4, 232, 4, 7);
-        test(9, 4, 233, 5, 7);
-        test(9, 4, 236, 5, 7);
-        test(9, 4, 237, 6, 7);
-        test(9, 4, 240, 6, 7);
-        test(9, 4, 241, 7, 7);
-        test(9, 4, 244, 7, 7);
-        test(9, 4, 245, 8, 7);
-        test(9, 4, 248, 8, 7);
-        test(9, 4, 249, 9, 7);
-        test(9, 4, 252, 9, 7);
-
-        test(9, 4, 253, 1, 8);
-        test(9, 4, 256, 1, 8);
-        test(9, 4, 257, 2, 8);
-        test(9, 4, 260, 2, 8);
-        test(9, 4, 261, 3, 8);
-        test(9, 4, 264, 3, 8);
-        test(9, 4, 265, 4, 8);
-        test(9, 4, 268, 4, 8);
-        test(9, 4, 269, 5, 8);
-        test(9, 4, 272, 5, 8);
-        test(9, 4, 273, 6, 8);
-        test(9, 4, 276, 6, 8);
-        test(9, 4, 277, 7, 8);
-        test(9, 4, 280, 7, 8);
-        test(9, 4, 281, 8, 8);
-        test(9, 4, 284, 8, 8);
-        test(9, 4, 285, 9, 8);
-        test(9, 4, 288, 9, 8);
-
-        test(9, 4, 289, 1, 9);
-        test(9, 4, 292, 1, 9);
-        test(9, 4, 293, 2, 9);
-        test(9, 4, 296, 2, 9);
-        test(9, 4, 297, 3, 9);
-        test(9, 4, 300, 3, 9);
-        test(9, 4, 301, 4, 9);
-        test(9, 4, 304, 4, 9);
-        test(9, 4, 305, 5, 9);
-        test(9, 4, 308, 5, 9);
-        test(9, 4, 309, 6, 9);
-        test(9, 4, 312, 6, 9);
-        test(9, 4, 313, 7, 9);
-        test(9, 4, 316, 7, 9);
-        test(9, 4, 317, 8, 9);
-        test(9, 4, 320, 8, 9);
-        test(9, 4, 321, 9, 9);
         test(9, 4, 324, 9, 9);
 
         test(9, 4, 19, 5, 1);
@@ -1803,55 +1517,6 @@ public class TestFlat {
         test(5, 3, 12, 4, 1);
         test(5, 3, 13, 5, 1);
         test(5, 3, 15, 5, 1);
-
-        test(5, 3, 16, 1, 2);
-        test(5, 3, 18, 1, 2);
-        test(5, 3, 19, 2, 2);
-        test(5, 3, 21, 2, 2);
-        test(5, 3, 22, 3, 2);
-        test(5, 3, 24, 3, 2);
-        test(5, 3, 25, 4, 2);
-        test(5, 3, 27, 4, 2);
-        test(5, 3, 28, 5, 2);
-        test(5, 3, 30, 5, 2);
-
-        test(5, 3, 31, 1, 3);
-        test(5, 3, 33, 1, 3);
-        test(5, 3, 34, 2, 3);
-        test(5, 3, 36, 2, 3);
-        test(5, 3, 37, 3, 3);
-        test(5, 3, 39, 3, 3);
-        test(5, 3, 40, 4, 3);
-        test(5, 3, 42, 4, 3);
-        test(5, 3, 43, 5, 3);
-        test(5, 3, 45, 5, 3);
-
-        test(5, 3, 46, 1, 4);
-        test(5, 3, 48, 1, 4);
-        test(5, 3, 49, 2, 4);
-        test(5, 3, 51, 2, 4);
-        test(5, 3, 52, 3, 4);
-        test(5, 3, 54, 3, 4);
-        test(5, 3, 55, 4, 4);
-        test(5, 3, 57, 4, 4);
-        test(5, 3, 58, 5, 4);
-        test(5, 3, 60, 5, 4);
-
-        test(5, 3, 61, 1, 5);
-        test(5, 3, 63, 1, 5);
-        test(5, 3, 64, 2, 5);
-        test(5, 3, 66, 2, 5);
-        test(5, 3, 67, 3, 5);
-        test(5, 3, 69, 3, 5);
-        test(5, 3, 70, 4, 5);
-        test(5, 3, 72, 4, 5);
-        test(5, 3, 73, 5, 5);
-        test(5, 3, 75, 5, 5);
-
-        test(5, 3, 5, 2, 1);
-        test(5, 3, 8, 3, 1);
-        test(5, 3, 11, 4, 1);
-        test(5, 3, 14, 5, 1);
 
         test(5, 3, 17, 1, 2);
         test(5, 3, 20, 2, 2);
@@ -1897,40 +1562,6 @@ public class TestFlat {
         test(9, 8, 143, 9, 2);
         test(9, 8, 144, 9, 2);
 
-        test(9, 8, 9, 2, 1);
-        test(9, 8, 16, 2, 1);
-        test(9, 8, 17, 3, 1);
-        test(9, 8, 24, 3, 1);
-        test(9, 8, 25, 4, 1);
-        test(9, 8, 32, 4, 1);
-        test(9, 8, 33, 5, 1);
-        test(9, 8, 40, 5, 1);
-        test(9, 8, 41, 6, 1);
-        test(9, 8, 48, 6, 1);
-        test(9, 8, 49, 7, 1);
-        test(9, 8, 56, 7, 1);
-        test(9, 8, 57, 8, 1);
-        test(9, 8, 64, 8, 1);
-        test(9, 8, 65, 9, 1);
-        test(9, 8, 72, 9, 1);
-
-        test(9, 8, 73, 1, 2);
-        test(9, 8, 80, 1, 2);
-        test(9, 8, 81, 2, 2);
-        test(9, 8, 88, 2, 2);
-        test(9, 8, 89, 3, 2);
-        test(9, 8, 96, 3, 2);
-        test(9, 8, 97, 4, 2);
-        test(9, 8, 104, 4, 2);
-        test(9, 8, 105, 5, 2);
-        test(9, 8, 112, 5, 2);
-        test(9, 8, 113, 6, 2);
-        test(9, 8, 120, 6, 2);
-        test(9, 8, 121, 7, 2);
-        test(9, 8, 128, 7, 2);
-        test(9, 8, 129, 8, 2);
-        test(9, 8, 136, 8, 2);
-
         test(9, 8, 14, 2, 1);
         test(9, 8, 23, 3, 1);
         test(9, 8, 28, 4, 1);
@@ -1959,6 +1590,66 @@ public class TestFlat {
         test(9, 8, 122, 7, 2);
         test(9, 8, 133, 8, 2);
         //endregion
+
+        //region 20 floors and 4 apartments on the floor
+        test(20, 4, 1, 1, 1);
+        test(20, 4, 2, 1, 1);
+        test(20, 4, 3, 1, 1);
+        test(20, 4, 4, 1, 1);
+        test(20, 4, 5, 2, 1);
+
+        test(20, 4, 236, 19, 3);
+        test(20, 4, 237, 20, 3);
+        test(20, 4, 238, 20, 3);
+        test(20, 4, 239, 20, 3);
+        test(20, 4, 240, 20, 3);
+
+        test(20, 4, 13, 4, 1);
+        test(20, 4, 57, 15, 1);
+        test(20, 4, 104, 6, 2);
+        test(20, 4, 183, 6, 3);
+        test(20, 4, 225, 17, 3);
+        //endregion
+
+        //region 24 floors and 5 apartments on the floor
+        test(24, 5, 1, 1, 1);
+        test(24, 5, 2, 1, 1);
+        test(24, 5, 3, 1, 1);
+        test(24, 5, 4, 1, 1);
+        test(24, 5, 5, 1, 1);
+
+        test(24, 5, 116, 24, 1);
+        test(24, 5, 117, 24, 1);
+        test(24, 5, 118, 24, 1);
+        test(24, 5, 119, 24, 1);
+        test(24, 5, 120, 24, 1);
+
+        test(24, 5, 13, 3, 1);
+        test(24, 5, 57, 12, 1);
+        test(24, 5, 93, 19, 1);
+        test(24, 5, 105, 21, 1);
+        test(24, 5, 113, 23, 1);
+        //endregion
+
+        //region 28 floors and 4 apartments on the floor
+        test(28, 4, 1, 1, 1);
+        test(28, 4, 2, 1, 1);
+        test(28, 4, 3, 1, 1);
+        test(28, 4, 4, 1, 1);
+        test(28, 4, 5, 2, 1);
+
+        test(28, 4, 108, 27, 1);
+        test(28, 4, 109, 28, 1);
+        test(28, 4, 110, 28, 1);
+        test(28, 4, 111, 28, 1);
+        test(28, 4, 112, 28, 1);
+
+        test(28, 4, 12, 3, 1);
+        test(28, 4, 46, 12, 1);
+        test(28, 4, 78, 20, 1);
+        test(28, 4, 99, 25, 1);
+        test(28, 4, 105, 27, 1);
+        //endregion
     }
 
     @Test// крайние квартиры
@@ -1978,109 +1669,98 @@ public class TestFlat {
         test(5, 2, 30, 5, 3);
         test(5, 2, 40, 5, 4);
         test(5, 2, 50, 5, 5);
-
-        test(14, 4, 11, 3, 1);
-        test(14, 4, 22, 6, 1);
-        test(14, 4, 33, 9, 1);
-        test(14, 4, 44, 11, 1);
-        test(14, 4, 55, 14, 1);
-        test(14, 4, 66, 3, 2);
-        test(14, 4, 77, 6, 2);
-        test(14, 4, 88, 8, 2);
-        test(14, 4, 99, 11, 2);
-        test(14, 4, 111, 14, 2);
-        test(4, 3, 11, 4, 1);
-        test(4, 3, 22, 4, 2);
-        test(4, 3, 33, 3, 3);
-        test(4, 3, 44, 3, 4);
-        test(4, 3, 55, 3, 5);
-        test(5, 2, 11, 1, 2);
-        test(5, 2, 22, 1, 3);
-        test(5, 2, 33, 2, 4);
-        test(5, 2, 44, 2, 5);
-        test(5, 2, 55, 3, 6);
+        test(26, 29990315, 779748190, 26, 1);
+        test(26, 29990315, 1559496380, 26, 2);
+        test(26, 11990315, 311748190, 26, 1);
+        test(26, 11990315, 623496380, 26, 2);
+        test(26, 11990315, 1870489140, 26, 6);
+        test(26, 79990315, 2079748190, 26, 1);
+        test(1190315, 59, 70228585, 1190315, 1);
+        test(1190315, 59, 140457170, 1190315, 2);
+        test(1190315, 59, 210685755, 1190315, 3);
+        test(11983746, 48, 575219808, 11983746, 1);
+        test(11983746, 48, 1150439616, 11983746, 2);
+        test(11983746, 48, 1725659424, 11983746, 3);
+        test(9135, 46242, 422420670, 9135, 1);
+        test(9135, 46242, 844841340, 9135, 2);
+        test(9135, 46242, 1267262010, 9135, 3);
+        test(9135, 46242, 1689682680, 9135, 4);
+        test(9135, 46242, 2112103350, 9135, 5);
     }
 
     @Test//любые квартиры в любых домах
     public void randomValues() {
         test(6, 9, 2, 1, 1);
         test(6, 9, 11, 2, 1);
-        test(6, 9, 22, 3, 1);
-        test(6, 9, 33, 4, 1);
-        test(6, 9, 44, 5, 1);
-        test(6, 9, 53, 6, 1);
-        test(6, 9, 60, 1, 2);
-        test(6, 9, 69, 2, 2);
-        test(6, 9, 77, 3, 2);
-        test(6, 9, 89, 4, 2);
-        test(6, 9, 99, 5, 2);
         test(6, 9, 102, 6, 2);
-        test(6, 9, 212, 6, 4);
-        test(6, 9, 432, 6, 8);
         test(6, 9, 1245, 1, 24);
-        test(6, 9, 8154, 6, 151);
         test(6, 9, 12633, 6, 234);
-        test(6, 9, 46718, 1, 866);
         test(6, 9, 64791, 5, 1200);
         test(6, 9, 142573, 2, 2641);
-        test(6, 9, 367248, 6, 6801);
         test(6, 9, 746136, 2, 13818);
         test(6, 9, 1843992, 6, 34148);
-        test(6, 9, 6473914, 2, 119888);
         test(6, 9, 9273124, 4, 171725);
         test(6, 9, 21356821, 5, 395497);
-        test(6, 9, 46791340, 2, 866507);
         test(6, 9, 97623147, 1, 1807837);
-        test(6, 9, 123794316, 2, 2292488);
         test(6, 9, 794316237, 6, 14709560);
-        test(6, 9, 1671286011, 6, 30949741);
         test(6, 9, 1937438136, 6, 35878484);
 
         test(2316, 423517, 342, 1, 1);
-        test(2316, 423517, 1422, 1, 1);
         test(2316, 423517, 4352, 1, 1);
         test(2316, 423517, 11625, 1, 1);
-        test(2316, 423517, 34251, 1, 1);
         test(2316, 423517, 83721, 1, 1);
         test(2316, 423517, 125363, 1, 1);
-        test(2316, 423517, 152363, 1, 1);
-        test(2316, 423517, 413243, 1, 1);
         test(2316, 423517, 435252, 2, 1);
         test(2316, 423517, 647382, 2, 1);
-        test(2316, 423517, 846353, 2, 1);
         test(2316, 423517, 1562435, 4, 1);
         test(2316, 423517, 58235420, 138, 1);
         test(2316, 423517, 142453638, 337, 1);
-        test(2316, 423517, 574956421, 1358, 1);
-        test(2316, 423517, 631258912, 1491, 1);
         test(2316, 423517, 647932691, 1530, 1);
-        test(2316, 423517, 746125182, 1762, 1);
         test(2316, 423517, 1253245738, 644, 2);
         test(2316, 423517, 2047354681, 203, 3);
         test(2316, 423517, MAX_VALUE, 439, 3);
 
         test(53234, 2451, 212, 1, 1);
-        test(53234, 2451, 432, 1, 1);
         test(53234, 2451, 1245, 1, 1);
         test(53234, 2451, 8154, 4, 1);
         test(53234, 2451, 12633, 6, 1);
-        test(53234, 2451, 46718, 20, 1);
         test(53234, 2451, 64791, 27, 1);
         test(53234, 2451, 142573, 59, 1);
-        test(53234, 2451, 367248, 150, 1);
         test(53234, 2451, 746136, 305, 1);
         test(53234, 2451, 1843992, 753, 1);
-        test(53234, 2451, 6473914, 2642, 1);
         test(53234, 2451, 9273124, 3784, 1);
         test(53234, 2451, 21356821, 8714, 1);
-        test(53234, 2451, 46791340, 19091, 1);
         test(53234, 2451, 97623147, 39830, 1);
-        test(53234, 2451, 123794316, 50508, 1);
         test(53234, 2451, 794316237, 4675, 7);
-        test(53234, 2451, 1671286011, 43072, 13);
         test(53234, 2451, 1937438136, 45193, 15);
         test(53234, 2451, 2047384124, 36817, 16);
         test(53234, 2451, MAX_VALUE, 24423, 17);
+
+        test(81983746, 8, 1, 1, 1);
+        test(81983746, 8, 14, 2, 1);
+        test(81983746, 8, 365, 46, 1);
+        test(81983746, 8, 7542, 943, 1);
+        test(81983746, 8, 85325, 10666, 1);
+        test(81983746, 8, 163467, 20434, 1);
+        test(81983746, 8, 6532312, 816539, 1);
+        test(81983746, 8, 61346521, 7668316, 1);
+        test(81983746, 8, 768963073, 14136639, 2);
+        test(81983746, 8, 1356574361, 5604304, 3);
+        test(81983746, 8, 1977134861, 1190620, 4);
+        test(81983746, 8, 2095732061, 16015270, 4);
+
+        test(421, 43, 17971, 418, 1);
+        test(43, 421, 38308, 5, 3);
+        test(52489, 21796, 1143984853, 52486, 1);
+        test(1874, 6153, 11826063, 48, 2);
+        test(97, 34567, 6740562, 1, 3);
+        test(25843, 864, 22325757, 25840, 1);
+        test(123, 17436, 12571353, 106, 6);
+        test(97823, 4216, 414942933, 598, 2);
+        test(7245, 36419, 300201814, 998, 2);
+        test(984261, 2131, 1833305690, 860303, 1);
+        test(621, 32158, 16014681, 498, 1);
+        test(56489, 9478, 1038902533, 53123, 2);
     }
 
     @Test
@@ -2088,113 +1768,151 @@ public class TestFlat {
         //region 666*666
         test(666, 666, 111, 1, 1);
         test(666, 666, 444, 1, 1);
-        test(666, 666, 1111, 2, 1);
         test(666, 666, 2222, 4, 1);
-        test(666, 666, 3333, 6, 1);
-        test(666, 666, 4444, 7, 1);
-        test(666, 666, 5555, 9, 1);
         test(666, 666, 6666, 11, 1);
-        test(666, 666, 7777, 12, 1);
-        test(666, 666, 8888, 14, 1);
         test(666, 666, 9999, 16, 1);
         test(666, 666, 11111, 17, 1);
-        test(666, 666, 22222, 34, 1);
-        test(666, 666, 33333, 51, 1);
-        test(666, 666, 44444, 67, 1);
         test(666, 666, 55555, 84, 1);
-        test(666, 666, 66666, 101, 1);
-        test(666, 666, 77777, 117, 1);
-        test(666, 666, 88888, 134, 1);
-        test(666, 666, 99999, 151, 1);
         test(666, 666, 111111, 167, 1);
-        test(666, 666, 222222, 334, 1);
-        test(666, 666, 333333, 501, 1);
-        test(666, 666, 444444, 2, 2);
-        test(666, 666, 555555, 169, 2);
         test(666, 666, 666666, 335, 2);
-        test(666, 666, 777777, 502, 2);
-        test(666, 666, 888888, 3, 3);
         test(666, 666, 999999, 170, 3);
         test(666, 666, 1111111, 337, 3);
-        test(666, 666, 2222222, 7, 6);
         test(666, 666, 3333333, 344, 8);
+        //endregion
+
+        //region 666*666666
+        test(666, 666666, 111, 1, 1);
+        test(666, 666666, 444, 1, 1);
+        test(666, 666666, 2222, 1, 1);
+        test(666, 666666, 6666, 1, 1);
+        test(666, 666666, 9999, 1, 1);
+        test(666, 666666, 11111, 1, 1);
+        test(666, 666666, 55555, 1, 1);
+        test(666, 666666, 111111, 1, 1);
+        test(666, 666666, 666666, 1, 1);
+        test(666, 666666, 999999, 2, 1);
+        test(666, 666666, 1111111, 2, 1);
+        test(666, 666666, 3333333, 6, 1);
+        //endregion
+
+        //region 666666*666
+        test(666666, 666, 111, 1, 1);
+        test(666666, 666, 444, 1, 1);
+        test(666666, 666, 2222, 4, 1);
+        test(666666, 666, 6666, 11, 1);
+        test(666666, 666, 9999, 16, 1);
+        test(666666, 666, 11111, 17, 1);
+        test(666666, 666, 55555, 84, 1);
+        test(666666, 666, 111111, 167, 1);
+        test(666666, 666, 666666, 1001, 1);
+        test(666666, 666, 999999, 1502, 1);
+        test(666666, 666, 1111111, 1669, 1);
+        test(666666, 666, 3333333, 5006, 1);
         //endregion
 
         //region 777*777
         test(777, 777, 111, 1, 1);
         test(777, 777, 444, 1, 1);
-        test(777, 777, 1111, 2, 1);
         test(777, 777, 2222, 3, 1);
-        test(777, 777, 3333, 5, 1);
-        test(777, 777, 4444, 6, 1);
-        test(777, 777, 5555, 8, 1);
-        test(777, 777, 6666, 9, 1);
         test(777, 777, 7777, 11, 1);
-        test(777, 777, 8888, 12, 1);
-        test(777, 777, 9999, 13, 1);
-        test(777, 777, 11111, 15, 1);
         test(777, 777, 22222, 29, 1);
-        test(777, 777, 33333, 43, 1);
-        test(777, 777, 44444, 58, 1);
         test(777, 777, 55555, 72, 1);
-        test(777, 777, 66666, 86, 1);
-        test(777, 777, 77777, 101, 1);
-        test(777, 777, 88888, 115, 1);
         test(777, 777, 99999, 129, 1);
         test(777, 777, 111111, 143, 1);
-        test(777, 777, 222222, 286, 1);
-        test(777, 777, 333333, 429, 1);
         test(777, 777, 444444, 572, 1);
-        test(777, 777, 555555, 715, 1);
-        test(777, 777, 666666, 81, 2);
         test(777, 777, 777777, 224, 2);
         test(777, 777, 888888, 367, 2);
-        test(777, 777, 999999, 510, 2);
-        test(777, 777, 1111111, 654, 2);
         test(777, 777, 2222222, 530, 4);
-        test(777, 777, 3333333, 406, 6);
         test(777, 777, 4444444, 282, 8);
+        //endregion
+
+        //region 777*777777
+        test(777, 777777, 111, 1, 1);
+        test(777, 777777, 444, 1, 1);
+        test(777, 777777, 2222, 1, 1);
+        test(777, 777777, 7777, 1, 1);
+        test(777, 777777, 22222, 1, 1);
+        test(777, 777777, 55555, 1, 1);
+        test(777, 777777, 99999, 1, 1);
+        test(777, 777777, 111111, 1, 1);
+        test(777, 777777, 444444, 1, 1);
+        test(777, 777777, 777777, 1, 1);
+        test(777, 777777, 888888, 2, 1);
+        test(777, 777777, 2222222, 3, 1);
+        test(777, 777777, 4444444, 6, 1);
+        test(777, 777777, 11111111, 15, 1);
+        test(777, 777777, 99999999, 129, 1);
+        test(777, 777777, 999999999, 509, 2);
+        test(777, 777777, 1999999999, 241, 4);
+        //endregion
+
+        //region 777777*777
+        test(777777, 777, 111, 1, 1);
+        test(777777, 777, 444, 1, 1);
+        test(777777, 777, 2222, 3, 1);
+        test(777777, 777, 7777, 11, 1);
+        test(777777, 777, 22222, 29, 1);
+        test(777777, 777, 55555, 72, 1);
+        test(777777, 777, 99999, 129, 1);
+        test(777777, 777, 111111, 143, 1);
+        test(777777, 777, 444444, 572, 1);
+        test(777777, 777, 777777, 1001, 1);
+        test(777777, 777, 888888, 1144, 1);
+        test(777777, 777, 2222222, 2861, 1);
+        test(777777, 777, 4444444, 5721, 1);
         //endregion
 
         //region 888*888
         test(888, 888, 111, 1, 1);
         test(888, 888, 444, 1, 1);
-        test(888, 888, 1111, 2, 1);
         test(888, 888, 2222, 3, 1);
-        test(888, 888, 3333, 4, 1);
-        test(888, 888, 4444, 6, 1);
-        test(888, 888, 5555, 7, 1);
-        test(888, 888, 6666, 8, 1);
-        test(888, 888, 7777, 9, 1);
-        test(888, 888, 8888, 11, 1);
         test(888, 888, 9999, 12, 1);
         test(888, 888, 11111, 13, 1);
-        test(888, 888, 22222, 26, 1);
-        test(888, 888, 33333, 38, 1);
-        test(888, 888, 44444, 51, 1);
-        test(888, 888, 55555, 63, 1);
         test(888, 888, 66666, 76, 1);
         test(888, 888, 77777, 88, 1);
-        test(888, 888, 88888, 101, 1);
-        test(888, 888, 99999, 113, 1);
-        test(888, 888, 111111, 126, 1);
-        test(888, 888, 222222, 251, 1);
         test(888, 888, 333333, 376, 1);
-        test(888, 888, 444444, 501, 1);
-        test(888, 888, 555555, 626, 1);
-        test(888, 888, 666666, 751, 1);
-        test(888, 888, 777777, 876, 1);
         test(888, 888, 888888, 113, 2);
-        test(888, 888, 999999, 239, 2);
         test(888, 888, 1111111, 364, 2);
-        test(888, 888, 2222222, 727, 3);
-        test(888, 888, 3333333, 202, 5);
         test(888, 888, 4444444, 566, 6);
+        //endregion
+
+        //region 888888*888
+        test(888888, 888, 111, 1, 1);
+        test(888888, 888, 444, 1, 1);
+        test(888888, 888, 2222, 3, 1);
+        test(888888, 888, 9999, 12, 1);
+        test(888888, 888, 11111, 13, 1);
+        test(888888, 888, 66666, 76, 1);
+        test(888888, 888, 77777, 88, 1);
+        test(888888, 888, 333333, 376, 1);
+        test(888888, 888, 888888, 1001, 1);
+        test(888888, 888, 1111111, 1252, 1);
+        test(888888, 888, 4444444, 5006, 1);
+        //endregion
+
+        //region 888*888888
+        test(888, 888888, 111, 1, 1);
+        test(888, 888888, 444, 1, 1);
+        test(888, 888888, 2222, 1, 1);
+        test(888, 888888, 9999, 1, 1);
+        test(888, 888888, 11111, 1, 1);
+        test(888, 888888, 66666, 1, 1);
+        test(888, 888888, 77777, 1, 1);
+        test(888, 888888, 333333, 1, 1);
+        test(888, 888888, 888888, 1, 1);
+        test(888, 888888, 1111111, 2, 1);
+        test(888, 888888, 4444444, 6, 1);
         //endregion
     }
 
     private void test(int floor, int apartmentsOnTheFloor, int flat, int expectedFloor, int expectedEntrance) {
-        int[] result = building.findAFloorAndAnEntrance(floor, apartmentsOnTheFloor, flat);
-        Assert.assertArrayEquals(new int[]{expectedFloor, expectedEntrance}, result);
+        int[] result = new int[0];
+        try {
+            result = building.findAFloorAndAnEntrance(floor, apartmentsOnTheFloor, flat);
+            Assert.assertArrayEquals(new int[]{expectedFloor, expectedEntrance}, result);
+        } catch (InvalidValuesException e) {
+            assertThrows(InvalidValuesException.class, ()->building.findAFloorAndAnEntrance(floor, apartmentsOnTheFloor, flat));
+        }
+
     }
 }
