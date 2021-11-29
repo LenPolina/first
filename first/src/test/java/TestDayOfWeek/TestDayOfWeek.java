@@ -1,12 +1,16 @@
 package TestDayOfWeek;
 
 import DayOfWeek.InvalidValuesException;
+import DayOfWeek.Main;
 import DayOfWeek.Year;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertThrows;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
 
 public class TestDayOfWeek {
 
@@ -18,129 +22,129 @@ public class TestDayOfWeek {
     }
 
     @Test
-    public void invalidTest(){
+    public void invalidTest()  {
         //1
-        test(8, 1, 1, "Вторник");
-        test(7, 0, 1, "Вторник");
-        test(7, -1, 1, "Вторник");
-        test(7, 1, 0, "Вторник");
-        test(7, 1, -1, "Вторник");
+        exceptionTest(8, 1, 1);
+        exceptionTest(7, 0, 1);
+        exceptionTest(7, -1, 1);
+        exceptionTest(7, 1, 0);
+        exceptionTest(7, 1, -1);
         //2
-        test(-1, 1, 1, "Вторник");
-        test(0, 1, 1, "Вторник");
-        test(1, 0, 1, "Вторник");
-        test(1, -1, 1, "Вторник");
-        test(1, 1, 0, "Вторник");
-        test(1, 1, -1, "Вторник");
+        exceptionTest(-1, 1, 1);
+        exceptionTest(0, 1, 1);
+        exceptionTest(1, 0, 1);
+        exceptionTest(1, -1, 1);
+        exceptionTest(1, 1, 0);
+        exceptionTest(1, 1, -1);
         //3
-        test(-1, 31, 1, "Вторник");
-        test(0, 31, 1, "Вторник");
-        test(1, 32, 1, "Вторник");
-        test(1, 31, 0, "Вторник");
-        test(1, 31, -1, "Вторник");
-        test(1, 31, 2, "Вторник");
+        exceptionTest(-1, 31, 1);
+        exceptionTest(0, 31, 1);
+        exceptionTest(1, 32, 1);
+        exceptionTest(1, 31, 0);
+        exceptionTest(1, 31, -1);
+        exceptionTest(1, 31, 2);
         //4
-        test(8, 31, 1, "Вторник");
-        test(7, 32, 1, "Вторник");
-        test(7, 31, 0, "Вторник");
-        test(7, 31, -1, "Вторник");
-        test(7, 31, 2, "Вторник");
+        exceptionTest(8, 31, 1);
+        exceptionTest(7, 32, 1);
+        exceptionTest(7, 31, 0);
+        exceptionTest(7, 31, -1);
+        exceptionTest(7, 31, 2);
         //5
-        test(8, 1, 12, "Вторник");
-        test(7, 0, 12, "Вторник");
-        test(7, -1, 12, "Вторник");
-        test(7, 1, 13, "Вторник");
+        exceptionTest(8, 1, 12);
+        exceptionTest(7, 0, 12);
+        exceptionTest(7, -1, 12);
+        exceptionTest(7, 1, 13);
         //6
-        test(-1, 1, 12, "Вторник");
-        test(0, 1, 12, "Вторник");
-        test(1, 0, 12, "Вторник");
-        test(1, -1, 12, "Вторник");
-        test(1, 1, 13, "Вторник");
+        exceptionTest(-1, 1, 12);
+        exceptionTest(0, 1, 12);
+        exceptionTest(1, 0, 12);
+        exceptionTest(1, -1, 12);
+        exceptionTest(1, 1, 13);
         //7
-        test(-1, 31, 12, "Вторник");
-        test(0, 31, 12, "Вторник");
-        test(1, 32, 12, "Вторник");
-        test(1, 31, 13, "Вторник");
-        test(1, 31, 11, "Вторник");
+        exceptionTest(-1, 31, 12);
+        exceptionTest(0, 31, 12);
+        exceptionTest(1, 32, 12);
+        exceptionTest(1, 31, 13);
+        exceptionTest(1, 31, 11);
         //8
-        test(8, 31, 12, "Вторник");
-        test(7, 32, 12, "Вторник");
-        test(7, 31, 13, "Вторник");
-        test(7, 31, 11, "Вторник");
+        exceptionTest(8, 31, 12);
+        exceptionTest(7, 32, 12);
+        exceptionTest(7, 31, 13);
+        exceptionTest(7, 31, 11);
         //9
-        test(7, 31, 11, "Вторник");
-        test(8, 30, 11, "Вторник");
+        exceptionTest(7, 31, 11);
+        exceptionTest(8, 30, 11);
         //10
-        test(7, 32, 10, "Вторник");
-        test(8, 31, 10, "Вторник");
+        exceptionTest(7, 32, 10);
+        exceptionTest(8, 31, 10);
         //11
-        test(7, 31, 9, "Вторник");
-        test(8, 30, 9, "Вторник");
+        exceptionTest(7, 31, 9);
+        exceptionTest(8, 30, 9);
         //12
-        test(7, 32, 8, "Вторник");
-        test(8, 31, 8, "Вторник");
+        exceptionTest(7, 32, 8);
+        exceptionTest(8, 31, 8);
         //13
-        test(7, 32, 7, "Вторник");
-        test(8, 31, 7, "Вторник");
+        exceptionTest(7, 32, 7);
+        exceptionTest(8, 31, 7);
         //14
-        test(7, 31, 6, "Вторник");
-        test(8, 30, 6, "Вторник");
+        exceptionTest(7, 31, 6);
+        exceptionTest(8, 30, 6);
         //15
-        test(7, 32, 5, "Вторник");
-        test(8, 31, 5, "Вторник");
+        exceptionTest(7, 32, 5);
+        exceptionTest(8, 31, 5);
         //16
-        test(7, 31, 4, "Вторник");
-        test(8, 30, 4, "Вторник");
+        exceptionTest(7, 31, 4);
+        exceptionTest(8, 30, 4);
         //17
-        test(7, 32, 3, "Вторник");
-        test(8, 31, 3, "Вторник");
+        exceptionTest(7, 32, 3);
+        exceptionTest(8, 31, 3);
         //18
-        test(7, 29, 2, "Вторник");
-        test(8, 28, 2, "Вторник");
+        exceptionTest(7, 29, 2);
+        exceptionTest(8, 28, 2);
         //19
-        test(1, 31, 11, "Вторник");
-        test(0, 30, 11, "Вторник");
-        test(-1, 30, 11, "Вторник");
+        exceptionTest(1, 31, 11);
+        exceptionTest(0, 30, 11);
+        exceptionTest(-1, 30, 11);
         //20
-        test(1, 32, 10, "Вторник");
-        test(0, 31, 10, "Вторник");
-        test(-1, 31, 10, "Вторник");
+        exceptionTest(1, 32, 10);
+        exceptionTest(0, 31, 10);
+        exceptionTest(-1, 31, 10);
         //21
-        test(1, 31, 9, "Вторник");
-        test(0, 30, 9, "Вторник");
-        test(-1, 30, 9, "Вторник");
+        exceptionTest(1, 31, 9);
+        exceptionTest(0, 30, 9);
+        exceptionTest(-1, 30, 9);
         //22
-        test(1, 32, 8, "Вторник");
-        test(0, 31, 8, "Вторник");
-        test(-1, 31, 8, "Вторник");
+        exceptionTest(1, 32, 8);
+        exceptionTest(0, 31, 8);
+        exceptionTest(-1, 31, 8);
         //23
-        test(1, 32, 7, "Вторник");
-        test(0, 31, 7, "Вторник");
-        test(-1, 31, 7, "Вторник");
+        exceptionTest(1, 32, 7);
+        exceptionTest(0, 31, 7);
+        exceptionTest(-1, 31, 7);
         //24
-        test(1, 31, 6, "Вторник");
-        test(0, 30, 6, "Вторник");
-        test(-1, 30, 6, "Вторник");
+        exceptionTest(1, 31, 6);
+        exceptionTest(0, 30, 6);
+        exceptionTest(-1, 30, 6);
         //25
-        test(1, 32, 5, "Вторник");
-        test(0, 31, 5, "Вторник");
-        test(-1, 31, 5, "Вторник");
+        exceptionTest(1, 32, 5);
+        exceptionTest(0, 31, 5);
+        exceptionTest(-1, 31, 5);
         //26
-        test(1, 31, 4, "Вторник");
-        test(0, 30, 4, "Вторник");
-        test(-1, 30, 4, "Вторник");
+        exceptionTest(1, 31, 4);
+        exceptionTest(0, 30, 4);
+        exceptionTest(-1, 30, 4);
         //27
-        test(1, 32, 3, "Вторник");
-        test(0, 31, 3, "Вторник");
-        test(-1, 31, 3, "Вторник");
+        exceptionTest(1, 32, 3);
+        exceptionTest(0, 31, 3);
+        exceptionTest(-1, 31, 3);
         //28
-        test(1, 29, 2, "Вторник");
-        test(0, 28, 2, "Вторник");
-        test(-1, 28, 2, "Вторник");
+        exceptionTest(1, 29, 2);
+        exceptionTest(0, 28, 2);
+        exceptionTest(-1, 28, 2);
     }
 
     @Test
-    public void boundaryValuesTest() {
+    public void boundaryValuesTest() throws InvalidValuesException {
 
         //region all day of first month in 2018 пн (1)
         test(1, 1, 1, "Понедельник");
@@ -479,7 +483,7 @@ public class TestDayOfWeek {
     }
 
     @Test//на выходе один день недели 2019?
-    public void equivalenceClasses() {
+    public void equivalenceClasses() throws InvalidValuesException {
         //region NY пн
         test(1, 4, 6, "Понедельник");
         test(1, 3, 9, "Понедельник");
@@ -1097,7 +1101,7 @@ public class TestDayOfWeek {
     }
 
     @Test//праздники в разные года
-    public void subjectArea() {
+    public void subjectArea() throws InvalidValuesException {
         test(5, 28, 6, "Понедельник");
         test(6, 8, 3, "Вторник");
         test(4, 7, 1, "Среда");
@@ -1109,7 +1113,7 @@ public class TestDayOfWeek {
     }
 
     @Test//НГ в субботу или воскресенье
-    public void implementation() {
+    public void implementation() throws InvalidValuesException {
         test(1, 8, 4, "Воскресенье");
         test(1, 10, 6, "Воскресенье");
         test(1, 22, 7, "Воскресенье");
@@ -1127,7 +1131,7 @@ public class TestDayOfWeek {
     }
 
     @Test//любые дни
-    public void randomValues() {
+    public void randomValues() throws InvalidValuesException {
         test(3, 16, 6, "Понедельник");
         test(2, 11, 6, "Вторник");
         test(7, 19, 4, "Среда");
@@ -1138,7 +1142,7 @@ public class TestDayOfWeek {
     }
 
     @Test//чьи-то др
-    public void otherSpecialMeanings() {
+    public void otherSpecialMeanings() throws InvalidValuesException {
         test(1, 11, 7, "Среда");
         test(1, 20, 4, "Пятница");
 
@@ -1165,11 +1169,35 @@ public class TestDayOfWeek {
         test(7, 29, 7, "Суббота");
     }
 
-    private void test(int newYearDay, int day, int month, String expectedDay) {
+    private void test(int newYearDay, int day, int month, String expectedDay) throws InvalidValuesException {
+        String data = newYearDay + " " + day + " " + month;
+        InputStream inputStream = new ByteArrayInputStream(data.getBytes());
+        System.setIn(inputStream);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream stream = new PrintStream(outputStream);
+        System.setOut(stream);
+
+        String expectedResult = expectedDay + "\r\n";
+
+        Main.main(new String[]{});
+        String actualResult = outputStream.toString();
+        Assert.assertEquals(expectedResult, actualResult);
+    }
+
+    private void exceptionTest(int newYearDay, int day, int month)  {
         try {
-            Assert.assertEquals(expectedDay, year.findNameOfDayOfTheWeek(newYearDay, day, month));
-        } catch (InvalidValuesException e) {
-            assertThrows(InvalidValuesException.class, () -> year.findNameOfDayOfTheWeek(newYearDay, day, month));
+            String data = newYearDay + " " + day + " " + month;
+            InputStream inputStream = new ByteArrayInputStream(data.getBytes());
+            System.setIn(inputStream);
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            PrintStream stream = new PrintStream(outputStream);
+            System.setOut(stream);
+
+            Main.main(new String[]{});
+        }catch (InvalidValuesException ex){
+            Assert.assertEquals("Вы ввели невалидное значение", ex.getMessage());
         }
     }
 }

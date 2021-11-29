@@ -1,16 +1,22 @@
 package TestSwap;
 
 import Swap.Swap;
+import Swap.Main;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static java.lang.Integer.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+
+import static java.lang.Integer.MAX_VALUE;
+import static java.lang.Integer.MIN_VALUE;
 
 public class TestSwap {
 
     Swap swap;
-    int a = 0;
 
     @Before
     public void createObject() {
@@ -26,7 +32,7 @@ public class TestSwap {
         test(1, MAX_VALUE);
         test(MAX_VALUE, MAX_VALUE);
         test(MAX_VALUE - 1, MAX_VALUE);
-        test(MAX_VALUE + 1, MAX_VALUE);
+        test(MIN_VALUE, MAX_VALUE);
 
         //region random
         test(2, MAX_VALUE);
@@ -276,7 +282,7 @@ public class TestSwap {
     public void equivalenceClasses() {
 
         //region |_
-        test(0, MAX_VALUE + 1);
+        test(0, MIN_VALUE);
         test(0, MAX_VALUE - 1);
         test(0, 0);
         test(0, 1);
@@ -546,25 +552,35 @@ public class TestSwap {
         test(2345, 345);
         test(987, 7890);
         test(6543, 5678);
-        test(54, 678);
-        System.out.println(a);
     }
 
     private void test(int firstNumber, int secondNumber) {
-        assertEquals(firstNumber, secondNumber);
-        assertEquals(-1 * firstNumber, secondNumber);
-        assertEquals(firstNumber, -1 * secondNumber);
-        assertEquals(-1 * firstNumber, -1 * secondNumber);
+        check(firstNumber, secondNumber);
+        check(-1 * firstNumber, secondNumber);
+        check(firstNumber, -1 * secondNumber);
+        check(-1 * firstNumber, -1 * secondNumber);
 
-        assertEquals(secondNumber, firstNumber);
-        assertEquals(secondNumber, -1 * firstNumber);
-        assertEquals(-1 * secondNumber, firstNumber);
-        assertEquals(-1 * secondNumber, -1 * firstNumber);
+        check(secondNumber, firstNumber);
+        check(secondNumber, -1 * firstNumber);
+        check(-1 * secondNumber, firstNumber);
+        check(-1 * secondNumber, -1 * firstNumber);
     }
 
-    private void assertEquals(int firstNumber, int secondNumber) {
-        Assert.assertArrayEquals(new int[]{secondNumber, firstNumber}, swap.swap(firstNumber, secondNumber));
-        a++;
+    private void check(int firstNumber, int secondNumber) {
+        String data = firstNumber + " " + secondNumber;
+        InputStream inputStream = new ByteArrayInputStream(data.getBytes());
+        System.setIn(inputStream);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream stream = new PrintStream(outputStream);
+        System.setOut(stream);
+
+        String expectedResult = firstNumber + " " + secondNumber + " after swap = " + secondNumber + " " + firstNumber + "\r\n";
+
+        Main.main(new String[]{});
+        String actualResult = outputStream.toString();
+
+        Assert.assertEquals(expectedResult, actualResult);
     }
 
 

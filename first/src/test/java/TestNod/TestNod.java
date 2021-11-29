@@ -1,16 +1,22 @@
 package TestNod;
 
+import Nod.Main;
 import Nod.Numbers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static java.lang.Integer.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+
+import static java.lang.Integer.MAX_VALUE;
+import static java.lang.Integer.MIN_VALUE;
 
 public class TestNod {
 
     Numbers numbers;
-    int a = 0;
 
     @Before
     public void createObject() {
@@ -18,7 +24,7 @@ public class TestNod {
     }
 
     @Test// Int.Max и Int.Min
-    public void boundaryValuesTest() {
+    public void boundaryValuesTest()  {
         test(MAX_VALUE, MAX_VALUE, MAX_VALUE, MAX_VALUE, MAX_VALUE);//1111
         test(1, MAX_VALUE - 1, MAX_VALUE, MAX_VALUE, MAX_VALUE);//1111
         test(1, MAX_VALUE - 1, MAX_VALUE - 1, MAX_VALUE, MAX_VALUE);//1111
@@ -47,7 +53,7 @@ public class TestNod {
     }
 
     @Test
-    public void equivalenceClasses() {
+    public void equivalenceClasses()  {
 
         test(1, 1, 1, 1, 1);
         test(1, 2, 3, 4, 5);
@@ -105,8 +111,8 @@ public class TestNod {
         test(262184691, 1310923455, 1573108146, 1835292837, 2097477528);
     }
 
-    @Test//просто маленькие понятные числа
-    public void subjectArea() {
+    @Test
+    public void subjectArea()  {
         test(2, 4, 6, 8, 10);
         test(2, 12, 30, 52, 54);
         test(3, 6, 9, 12, 15);
@@ -167,8 +173,8 @@ public class TestNod {
         test(31, 186, 465, 806, 837);
     }
 
-    @Test//разные нули
-    public void implementation() {
+    @Test
+    public void implementation()  {
 
         test(0, 0, 0, 0, 0);
 
@@ -204,8 +210,8 @@ public class TestNod {
 
     }
 
-    @Test//разные числа
-    public void randomValues() {
+    @Test
+    public void randomValues()  {
         test(1, 3, 45, 56, 89);
         test(1, 5, 32, 43, 65);
         test(2, 8, 12, 22, 46);
@@ -279,8 +285,8 @@ public class TestNod {
         test(291736288, 583472576, 875208864, 1458681440, 2042154016);
     }
 
-    @Test//те что сразу не поймешь
-    public void otherSpecialMeanings() {
+    @Test
+    public void otherSpecialMeanings()  {
         test(15, 107871105, 107872995, 107874735, 107877855);
         test(15, 90, 390, 14940, 777855);
         test(30, 215742210, 215745990, 215749470, 215755710);
@@ -347,14 +353,31 @@ public class TestNod {
         test(888, 885336, 5524248, 86040984, 707637432);
     }
 
-    private void test(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void test(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         testFirst(expectedNod, firstNumber, secondNumber, thirdNumber, fourthNumber);
         testSecond(expectedNod, firstNumber, secondNumber, thirdNumber, fourthNumber);
         testThird(expectedNod, firstNumber, secondNumber, thirdNumber, fourthNumber);
         testFours(expectedNod, firstNumber, secondNumber, thirdNumber, fourthNumber);
     }
 
-    private void testFirst(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void check(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
+        String data = firstNumber + " " + secondNumber + " " + thirdNumber + " " + fourthNumber;
+        InputStream inputStream = new ByteArrayInputStream(data.getBytes());
+        System.setIn(inputStream);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream stream = new PrintStream(outputStream);
+        System.setOut(stream);
+
+        String expectedResult = "НОД для " + firstNumber + " " + secondNumber + " " + thirdNumber + " " + fourthNumber + " = " + expectedNod + "\r\n";
+
+        Main.main(new String[]{});
+        String actualResult = outputStream.toString();
+        Assert.assertEquals(expectedResult, actualResult);
+    }
+
+
+    private void testFirst(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, firstNumber, secondNumber, thirdNumber, fourthNumber);
         check(expectedNod, firstNumber, secondNumber, fourthNumber, thirdNumber);
         check(expectedNod, firstNumber, thirdNumber, secondNumber, fourthNumber);
@@ -370,12 +393,8 @@ public class TestNod {
         testFirstWithSixthMinus(expectedNod, firstNumber, secondNumber, thirdNumber, fourthNumber);
     }
 
-    private void check(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
-        Assert.assertEquals(expectedNod, numbers.findNodForFourNumbers(firstNumber, secondNumber, thirdNumber, fourthNumber));
-        a++;
-    }
 
-    private void testFirstWithFirstMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFirstWithFirstMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * firstNumber, secondNumber, thirdNumber, fourthNumber);
         check(expectedNod, firstNumber, -1 * secondNumber, thirdNumber, fourthNumber);
         check(expectedNod, firstNumber, secondNumber, -1 * thirdNumber, fourthNumber);
@@ -393,7 +412,7 @@ public class TestNod {
         check(expectedNod, firstNumber, secondNumber, -1 * thirdNumber, -1 * fourthNumber);
     }
 
-    private void testFirstWithSixthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFirstWithSixthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * firstNumber, fourthNumber, thirdNumber, secondNumber);
         check(expectedNod, firstNumber, -1 * fourthNumber, thirdNumber, secondNumber);
         check(expectedNod, firstNumber, fourthNumber, -1 * thirdNumber, secondNumber);
@@ -411,7 +430,7 @@ public class TestNod {
         check(expectedNod, firstNumber, fourthNumber, -1 * thirdNumber, -1 * secondNumber);
     }
 
-    private void testFirstWithFifthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFirstWithFifthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * firstNumber, fourthNumber, secondNumber, thirdNumber);
         check(expectedNod, firstNumber, -1 * fourthNumber, secondNumber, thirdNumber);
         check(expectedNod, firstNumber, fourthNumber, -1 * secondNumber, thirdNumber);
@@ -429,7 +448,7 @@ public class TestNod {
         check(expectedNod, firstNumber, fourthNumber, -1 * secondNumber, -1 * thirdNumber);
     }
 
-    private void testFirstWithFoursMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFirstWithFoursMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * firstNumber, thirdNumber, fourthNumber, secondNumber);
         check(expectedNod, firstNumber, -1 * thirdNumber, fourthNumber, secondNumber);
         check(expectedNod, firstNumber, thirdNumber, -1 * fourthNumber, secondNumber);
@@ -447,7 +466,7 @@ public class TestNod {
         check(expectedNod, firstNumber, thirdNumber, -1 * fourthNumber, -1 * secondNumber);
     }
 
-    private void testFirstWithThirdMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFirstWithThirdMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * firstNumber, thirdNumber, secondNumber, fourthNumber);
         check(expectedNod, firstNumber, -1 * thirdNumber, secondNumber, fourthNumber);
         check(expectedNod, firstNumber, thirdNumber, -1 * secondNumber, fourthNumber);
@@ -465,7 +484,7 @@ public class TestNod {
         check(expectedNod, firstNumber, thirdNumber, -1 * secondNumber, -1 * fourthNumber);
     }
 
-    private void testFirstWithSecondMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFirstWithSecondMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * firstNumber, secondNumber, fourthNumber, thirdNumber);
         check(expectedNod, firstNumber, -1 * secondNumber, fourthNumber, thirdNumber);
         check(expectedNod, firstNumber, secondNumber, -1 * fourthNumber, thirdNumber);
@@ -483,7 +502,7 @@ public class TestNod {
         check(expectedNod, firstNumber, secondNumber, -1 * fourthNumber, -1 * thirdNumber);
     }
 
-    private void testSecond(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testSecond(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, secondNumber, firstNumber, thirdNumber, fourthNumber);
         check(expectedNod, secondNumber, firstNumber, fourthNumber, thirdNumber);
         check(expectedNod, secondNumber, thirdNumber, firstNumber, fourthNumber);
@@ -499,7 +518,7 @@ public class TestNod {
         testSecondWithSixthMinus(expectedNod, firstNumber, secondNumber, thirdNumber, fourthNumber);
     }
 
-    private void testSecondWithFirstMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testSecondWithFirstMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * secondNumber, firstNumber, thirdNumber, fourthNumber);
         check(expectedNod, secondNumber, -1 * firstNumber, thirdNumber, fourthNumber);
         check(expectedNod, secondNumber, firstNumber, -1 * thirdNumber, fourthNumber);
@@ -518,7 +537,7 @@ public class TestNod {
 
     }
 
-    private void testSecondWithFifthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testSecondWithFifthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * secondNumber, fourthNumber, firstNumber, thirdNumber);
         check(expectedNod, secondNumber, -1 * fourthNumber, firstNumber, thirdNumber);
         check(expectedNod, secondNumber, fourthNumber, -1 * firstNumber, thirdNumber);
@@ -537,7 +556,7 @@ public class TestNod {
 
     }
 
-    private void testSecondWithSixthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testSecondWithSixthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * secondNumber, fourthNumber, thirdNumber, firstNumber);
         check(expectedNod, secondNumber, -1 * fourthNumber, thirdNumber, firstNumber);
         check(expectedNod, secondNumber, fourthNumber, -1 * thirdNumber, firstNumber);
@@ -556,7 +575,7 @@ public class TestNod {
 
     }
 
-    private void testSecondWithFoursMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testSecondWithFoursMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * secondNumber, thirdNumber, fourthNumber, firstNumber);
         check(expectedNod, secondNumber, -1 * thirdNumber, fourthNumber, firstNumber);
         check(expectedNod, secondNumber, thirdNumber, -1 * fourthNumber, firstNumber);
@@ -575,7 +594,7 @@ public class TestNod {
 
     }
 
-    private void testSecondWithThirdMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testSecondWithThirdMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * secondNumber, thirdNumber, firstNumber, fourthNumber);
         check(expectedNod, secondNumber, -1 * thirdNumber, firstNumber, fourthNumber);
         check(expectedNod, secondNumber, thirdNumber, -1 * firstNumber, fourthNumber);
@@ -594,7 +613,7 @@ public class TestNod {
 
     }
 
-    private void testSecondWithSecondMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testSecondWithSecondMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * secondNumber, firstNumber, fourthNumber, thirdNumber);
         check(expectedNod, secondNumber, -1 * firstNumber, fourthNumber, thirdNumber);
         check(expectedNod, secondNumber, firstNumber, -1 * fourthNumber, thirdNumber);
@@ -613,7 +632,7 @@ public class TestNod {
 
     }
 
-    private void testThird(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testThird(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, thirdNumber, firstNumber, secondNumber, fourthNumber);
         check(expectedNod, thirdNumber, firstNumber, fourthNumber, secondNumber);
         check(expectedNod, thirdNumber, secondNumber, firstNumber, fourthNumber);
@@ -629,7 +648,7 @@ public class TestNod {
         testThirdWithSixthMinus(expectedNod, firstNumber, secondNumber, thirdNumber, fourthNumber);
     }
 
-    private void testThirdWithFirstMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testThirdWithFirstMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * thirdNumber, firstNumber, secondNumber, fourthNumber);
         check(expectedNod, thirdNumber, -1 * firstNumber, secondNumber, fourthNumber);
         check(expectedNod, thirdNumber, firstNumber, -1 * secondNumber, fourthNumber);
@@ -648,7 +667,7 @@ public class TestNod {
 
     }
 
-    private void testThirdWithFifthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testThirdWithFifthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * thirdNumber, fourthNumber, firstNumber, secondNumber);
         check(expectedNod, thirdNumber, -1 * fourthNumber, firstNumber, secondNumber);
         check(expectedNod, thirdNumber, fourthNumber, -1 * firstNumber, secondNumber);
@@ -667,7 +686,7 @@ public class TestNod {
 
     }
 
-    private void testThirdWithSixthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testThirdWithSixthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * thirdNumber, fourthNumber, firstNumber, secondNumber);
         check(expectedNod, thirdNumber, -1 * fourthNumber, firstNumber, secondNumber);
         check(expectedNod, thirdNumber, fourthNumber, -1 * firstNumber, secondNumber);
@@ -686,7 +705,7 @@ public class TestNod {
 
     }
 
-    private void testThirdWithFoursMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testThirdWithFoursMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * thirdNumber, secondNumber, fourthNumber, firstNumber);
         check(expectedNod, thirdNumber, -1 * secondNumber, fourthNumber, firstNumber);
         check(expectedNod, thirdNumber, secondNumber, -1 * fourthNumber, firstNumber);
@@ -706,7 +725,7 @@ public class TestNod {
 
     }
 
-    private void testThirdWithThirdMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testThirdWithThirdMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * thirdNumber, secondNumber, firstNumber, fourthNumber);
         check(expectedNod, thirdNumber, -1 * secondNumber, firstNumber, fourthNumber);
         check(expectedNod, thirdNumber, secondNumber, -1 * firstNumber, fourthNumber);
@@ -725,7 +744,7 @@ public class TestNod {
 
     }
 
-    private void testThirdWithSecondMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testThirdWithSecondMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * thirdNumber, firstNumber, fourthNumber, secondNumber);
         check(expectedNod, thirdNumber, -1 * firstNumber, fourthNumber, secondNumber);
         check(expectedNod, thirdNumber, firstNumber, -1 * fourthNumber, secondNumber);
@@ -744,7 +763,7 @@ public class TestNod {
 
     }
 
-    private void testFours(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFours(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, fourthNumber, firstNumber, secondNumber, thirdNumber);
         check(expectedNod, fourthNumber, firstNumber, thirdNumber, secondNumber);
         check(expectedNod, fourthNumber, secondNumber, firstNumber, thirdNumber);
@@ -760,7 +779,7 @@ public class TestNod {
         testFoursWithSixthMinus(expectedNod, firstNumber, secondNumber, thirdNumber, fourthNumber);
     }
 
-    private void testFoursWithSixthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFoursWithSixthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * fourthNumber, thirdNumber, secondNumber, firstNumber);
         check(expectedNod, fourthNumber, -1 * thirdNumber, secondNumber, firstNumber);
         check(expectedNod, fourthNumber, thirdNumber, -1 * secondNumber, firstNumber);
@@ -779,7 +798,7 @@ public class TestNod {
 
     }
 
-    private void testFoursWithFoursMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFoursWithFoursMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * fourthNumber, secondNumber, thirdNumber, firstNumber);
         check(expectedNod, fourthNumber, -1 * secondNumber, thirdNumber, firstNumber);
         check(expectedNod, fourthNumber, secondNumber, -1 * thirdNumber, firstNumber);
@@ -798,7 +817,7 @@ public class TestNod {
 
     }
 
-    private void testFoursWithFifthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFoursWithFifthMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * fourthNumber, thirdNumber, firstNumber, secondNumber);
         check(expectedNod, fourthNumber, -1 * thirdNumber, firstNumber, secondNumber);
         check(expectedNod, fourthNumber, thirdNumber, -1 * firstNumber, secondNumber);
@@ -817,7 +836,7 @@ public class TestNod {
 
     }
 
-    private void testFoursWithThirdMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFoursWithThirdMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * fourthNumber, secondNumber, firstNumber, thirdNumber);
         check(expectedNod, fourthNumber, -1 * secondNumber, firstNumber, thirdNumber);
         check(expectedNod, fourthNumber, secondNumber, -1 * firstNumber, thirdNumber);
@@ -836,7 +855,7 @@ public class TestNod {
 
     }
 
-    private void testFoursWithSecondMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFoursWithSecondMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * fourthNumber, firstNumber, thirdNumber, secondNumber);
         check(expectedNod, fourthNumber, -1 * firstNumber, thirdNumber, secondNumber);
         check(expectedNod, fourthNumber, firstNumber, -1 * thirdNumber, secondNumber);
@@ -855,7 +874,7 @@ public class TestNod {
 
     }
 
-    private void testFoursWithFirstMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber) {
+    private void testFoursWithFirstMinus(int expectedNod, int firstNumber, int secondNumber, int thirdNumber, int fourthNumber)  {
         check(expectedNod, -1 * fourthNumber, firstNumber, secondNumber, thirdNumber);
         check(expectedNod, fourthNumber, -1 * firstNumber, secondNumber, thirdNumber);
         check(expectedNod, fourthNumber, firstNumber, -1 * secondNumber, thirdNumber);

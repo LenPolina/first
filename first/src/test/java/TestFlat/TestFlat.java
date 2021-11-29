@@ -2,12 +2,15 @@ package TestFlat;
 
 import Flat.Building;
 import Flat.InvalidValuesException;
+import Flat.Main;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.*;
+
 import static java.lang.Integer.MAX_VALUE;
-import static org.junit.Assert.assertThrows;
+import static java.lang.Integer.MIN_VALUE;
 
 public class TestFlat {
 
@@ -19,51 +22,50 @@ public class TestFlat {
     }
 
     @Test
-    public void invalidTest(){
-        test(1,MAX_VALUE,0,1,1);
-        test(1,MAX_VALUE,-1,1,1);
-        test(2,MAX_VALUE,1,1,1);
-        test(2,MAX_VALUE,1,1,1);
-        test(1,MAX_VALUE+1,1,1,1);
-        test(0,MAX_VALUE,1,1,1);
-        test(-1,MAX_VALUE,1,1,1);
+    public void invalidTest() {
+        exceptionTest(1,MAX_VALUE,0);
+        exceptionTest(1,MAX_VALUE,-1);
+        exceptionTest(2,MAX_VALUE,1);
+        exceptionTest(2,MAX_VALUE,1);
+        exceptionTest(1,MIN_VALUE,1);
+        exceptionTest(0,MAX_VALUE,1);
+        exceptionTest(-1,MAX_VALUE,1);
 
-        test(1,1,0,1,1);
-        test(1,1,-1,1,1);
-        test(1,0,1,1,1);
-        test(1,-1,1,1,1);
-        test(0,1,1,1,1);
-        test(-1,1,1,1,1);
+        exceptionTest(1,1,0);
+        exceptionTest(1,1,-1);
+        exceptionTest(1,0,1);
+        exceptionTest(1,-1,1);
+        exceptionTest(0,1,1);
+        exceptionTest(-1,1,1);
 
-        test(1,1,MAX_VALUE+1,1,1);
-        test(1,0,MAX_VALUE,1,1);
-        test(1,-1,MAX_VALUE,1,1);
-        test(0,1,MAX_VALUE,1,1);
-        test(-1,1,MAX_VALUE,1,1);
+        exceptionTest(1,1,MIN_VALUE);
+        exceptionTest(1,0,MAX_VALUE);
+        exceptionTest(1,-1,MAX_VALUE);
+        exceptionTest(0,1,MAX_VALUE);
+        exceptionTest(-1,1,MAX_VALUE);
 
-        test(1,MAX_VALUE,MAX_VALUE+1,1,1);
-        test(2,MAX_VALUE,MAX_VALUE,1,1);
-        test(1,MAX_VALUE+1,MAX_VALUE,1,1);
-        test(0,MAX_VALUE,MAX_VALUE,1,1);
-        test(-1,MAX_VALUE,MAX_VALUE,1,1);
+        exceptionTest(1,MAX_VALUE,MIN_VALUE);
+        exceptionTest(2,MAX_VALUE,MAX_VALUE);
+        exceptionTest(1,MIN_VALUE,MAX_VALUE);
+        exceptionTest(0,MAX_VALUE,MAX_VALUE);
+        exceptionTest(-1,MAX_VALUE,MAX_VALUE);
 
-        test(MAX_VALUE,1,0,1,1);
-        test(MAX_VALUE,1,-1,1,1);
-        test(MAX_VALUE+1,1,1,1,1);
-        test(MAX_VALUE,0,1,1,1);
-        test(MAX_VALUE,-1,1,1,1);
-        test(MAX_VALUE,2,1,1,1);
+        exceptionTest(MAX_VALUE,1,0);
+        exceptionTest(MAX_VALUE,1,-1);
+        exceptionTest(MIN_VALUE,1,1);
+        exceptionTest(MAX_VALUE,0,1);
+        exceptionTest(MAX_VALUE,-1,1);
+        exceptionTest(MAX_VALUE,2,1);
 
-        test(MAX_VALUE,1,MAX_VALUE+1,1,1);
-        test(MAX_VALUE+1,1,MAX_VALUE,1,1);
-        test(MAX_VALUE,0,MAX_VALUE,1,1);
-        test(MAX_VALUE,-1,MAX_VALUE,1,1);
-        test(MAX_VALUE,2,MAX_VALUE,1,1);
+        exceptionTest(MAX_VALUE,1,MIN_VALUE);
+        exceptionTest(MIN_VALUE,1,MAX_VALUE);
+        exceptionTest(MAX_VALUE,0,MAX_VALUE);
+        exceptionTest(MAX_VALUE,-1,MAX_VALUE);
+        exceptionTest(MAX_VALUE,2,MAX_VALUE);
     }
 
-    //4_611_686_014_132_420_609
-    @Test//
-    public void boundaryValuesTest() {
+    @Test
+    public void boundaryValuesTest() throws InvalidValuesException, IOException {
 
         //region only first flat and different floor and different numbers of apartments on the floor(1)
         test(MAX_VALUE, 1, 1, 1, 1);
@@ -821,8 +823,8 @@ public class TestFlat {
         //endregion
     }
 
-    @Test//несколько квартир на одном этаже одного подъезда
-    public void equivalenceClasses() {
+    @Test
+    public void equivalenceClasses() throws InvalidValuesException {
 
         //region two floor, two apartments on the floor
         test(2, 2, 1, 1, 1);
@@ -1452,7 +1454,6 @@ public class TestFlat {
         test(2, MAX_VALUE / 2, 4, 1, 1);
         test(2, MAX_VALUE / 2, 5, 1, 1);
         test(2, MAX_VALUE / 2, 6, 1, 1);
-        test(2, MAX_VALUE, MAX_VALUE, 1, -1073741822);
 
         test(2, MAX_VALUE / 2, MAX_VALUE / 2 - 5, 1, 1);
         test(2, MAX_VALUE / 2, MAX_VALUE / 2 - 4, 1, 1);
@@ -1471,8 +1472,8 @@ public class TestFlat {
         //endregion
     }
 
-    @Test//обычные дома из жизни
-    public void subjectArea() {
+    @Test
+    public void subjectArea() throws InvalidValuesException, IOException {
         //region 9 floors and 4 apartments per floor
         test(9, 4, 1, 1, 1);
         test(9, 4, 2, 1, 1);
@@ -1652,8 +1653,8 @@ public class TestFlat {
         //endregion
     }
 
-    @Test// крайние квартиры
-    public void implementation() {
+    @Test
+    public void implementation() throws InvalidValuesException, IOException {
         test(14, 4, 56, 14, 1);
         test(14, 4, 112, 14, 2);
         test(14, 4, 168, 14, 3);
@@ -1688,8 +1689,8 @@ public class TestFlat {
         test(9135, 46242, 2112103350, 9135, 5);
     }
 
-    @Test//любые квартиры в любых домах
-    public void randomValues() {
+    @Test
+    public void randomValues() throws InvalidValuesException, IOException {
         test(6, 9, 2, 1, 1);
         test(6, 9, 11, 2, 1);
         test(6, 9, 102, 6, 2);
@@ -1764,7 +1765,7 @@ public class TestFlat {
     }
 
     @Test
-    public void otherSpecialMeanings() {
+    public void otherSpecialMeanings() throws InvalidValuesException, IOException {
         //region 666*666
         test(666, 666, 111, 1, 1);
         test(666, 666, 444, 1, 1);
@@ -1905,14 +1906,35 @@ public class TestFlat {
         //endregion
     }
 
-    private void test(int floor, int apartmentsOnTheFloor, int flat, int expectedFloor, int expectedEntrance) {
-        int[] result = new int[0];
-        try {
-            result = building.findAFloorAndAnEntrance(floor, apartmentsOnTheFloor, flat);
-            Assert.assertArrayEquals(new int[]{expectedFloor, expectedEntrance}, result);
-        } catch (InvalidValuesException e) {
-            assertThrows(InvalidValuesException.class, ()->building.findAFloorAndAnEntrance(floor, apartmentsOnTheFloor, flat));
-        }
+    private void test(int floor, int apartmentsOnTheFloor, int flat, int expectedFloor, int expectedEntrance) throws InvalidValuesException {
+        String data = floor + " " + apartmentsOnTheFloor + " " + flat;
+        InputStream inputStream = new ByteArrayInputStream(data.getBytes());
+        System.setIn(inputStream);
 
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream stream = new PrintStream(outputStream);
+        System.setOut(stream);
+
+        String expectedResult = flat + ": " + expectedFloor + " этаж," + expectedEntrance + " подъезд\r\n";
+
+        Main.main(new String[]{});
+        String actualResult = outputStream.toString();
+        Assert.assertEquals(expectedResult, actualResult);
+    }
+
+    private void exceptionTest(int floor, int apartmentsOnTheFloor, int flat) {
+        try {
+            String data = floor + " " + apartmentsOnTheFloor + " " + flat;
+            InputStream inputStream = new ByteArrayInputStream(data.getBytes());
+            System.setIn(inputStream);
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            PrintStream stream = new PrintStream(outputStream);
+            System.setOut(stream);
+
+            Main.main(new String[]{});
+        }catch (InvalidValuesException ex){
+            Assert.assertEquals("Вы ввели невалидное значение", ex.getMessage());
+        }
     }
 }
